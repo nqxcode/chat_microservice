@@ -35,7 +35,7 @@ func (s *server) Delete(_ context.Context, req *desc.DeleteRequest) (*empty.Empt
 }
 
 func (s *server) SendMessage(_ context.Context, req *desc.SendMessageRequest) (*empty.Empty, error) {
-	log.Printf(fmt.Sprintf("Send message: %v from %v at %v", req.GetMessage(), req.GetFrom(), req.GetTimestamp()))
+	log.Printf("Send message: %v from %v at %v", req.GetMessage(), req.GetFrom(), req.GetTimestamp())
 
 	return nil, nil
 }
