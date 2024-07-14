@@ -20,7 +20,7 @@ type server struct {
 	desc.UnimplementedChatV1Server
 }
 
-func (s *server) Create(ctx context.Context, req *desc.CreateRequest) (*desc.CreateResponse, error) {
+func (s *server) Create(_ context.Context, req *desc.CreateRequest) (*desc.CreateResponse, error) {
 	log.Printf("User names: %v", req.GetUsernames())
 
 	return &desc.CreateResponse{
@@ -28,13 +28,13 @@ func (s *server) Create(ctx context.Context, req *desc.CreateRequest) (*desc.Cre
 	}, nil
 }
 
-func (s *server) Delete(ctx context.Context, req *desc.DeleteRequest) (*empty.Empty, error) {
+func (s *server) Delete(_ context.Context, req *desc.DeleteRequest) (*empty.Empty, error) {
 	log.Printf("Delete user: %v", req.GetId())
 
 	return nil, nil
 }
 
-func (s *server) SendMessage(ctx context.Context, req *desc.SendMessageRequest) (*empty.Empty, error) {
+func (s *server) SendMessage(_ context.Context, req *desc.SendMessageRequest) (*empty.Empty, error) {
 	log.Printf(fmt.Sprintf("Send message: %v from %v at %v", req.GetMessage(), req.GetFrom(), req.GetTimestamp()))
 
 	return nil, nil
