@@ -1,2 +1,2 @@
-# Auth microservice 
+# Chat microservice 
 
