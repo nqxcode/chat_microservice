@@ -3,6 +3,7 @@ module github.com/nqxcode/chat_microservice
 go 1.22
 
 require (
+	github.com/brianvoe/gofakeit v3.18.0+incompatible
 	github.com/fatih/color v1.15.0
 	github.com/golang/protobuf v1.5.4
 	google.golang.org/grpc v1.65.0
