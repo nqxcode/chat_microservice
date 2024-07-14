@@ -24,7 +24,7 @@ func (s *server) Create(ctx context.Context, req *desc.CreateRequest) (*desc.Cre
 	log.Printf("User names: %v", req.GetUsernames())
 
 	return &desc.CreateResponse{
-		Id: gofakeit.Int64(),
+		Id: int64(gofakeit.Number(1, 1000)),
 	}, nil
 }
 
