@@ -38,7 +38,7 @@ func main() {
 }
 
 func (s *server) Create(_ context.Context, req *desc.CreateRequest) (*desc.CreateResponse, error) {
-	log.Printf("User names: %v", req.GetUsernames())
+	log.Printf("Chat name: %v, user ids: %v", req.GetName(), req.GetUserIdList())
 
 	return &desc.CreateResponse{
 		Id: int64(gofakeit.Number(1, 1000)),
