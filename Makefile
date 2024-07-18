@@ -36,3 +36,6 @@ build-grpc-server:
 
 build-target:
 	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -o ./bin/$(TARGET) ./cmd/$(TARGET)
+
+copy-to-server:
+	scp ./bin/grpc_server root@45.145.65.125:/root/grpc_server
