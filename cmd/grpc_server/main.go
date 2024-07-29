@@ -208,6 +208,7 @@ func (s *server) Delete(ctx context.Context, req *desc.DeleteRequest) (*empty.Em
 	}
 
 	log.Printf("delete %d rows from chat", res.RowsAffected())
+
 	return nil, nil
 }
 
