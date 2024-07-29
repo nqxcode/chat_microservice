@@ -21,8 +21,9 @@ create table message
 create table chat_to_user
 (
     chat_to_user_id bigserial primary key,
-    chat_id         BIGINT not null references chat (chat_id),
-    user_id         BIGINT not null,
+    chat_id         BIGINT    not null references chat (chat_id),
+    user_id         BIGINT    not null,
+    created_at      timestamp not null default now(),
     unique (chat_id, user_id)
 );
 
