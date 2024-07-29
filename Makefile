@@ -56,7 +56,7 @@ install-docker-buildx:
 
 docker-build-and-push:
 	docker buildx build --no-cache --platform linux/amd64 -t cr.selcloud.ru/nqxcode/chat-microservice:v0.0.2 .
-	docker login -u token -p ${REGISTRY_TOKEN} cr.selcloud.ru/nqxcode
+	docker login -u token -p ${REGISTRY_PASSWORD} cr.selcloud.ru/nqxcode
 	docker push cr.selcloud.ru/nqxcode/chat-microservice:v0.0.2
 
 
