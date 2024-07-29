@@ -13,9 +13,13 @@ import (
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/golang/protobuf/ptypes/empty"
+	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/pkg/errors"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/reflection"
+	"google.golang.org/grpc/status"
 )
 
 var configPath string
@@ -168,6 +172,22 @@ func (s *server) Delete(ctx context.Context, req *desc.DeleteRequest) (*empty.Em
 
 	log.Printf("delete %d rows from chat_to_user", res.RowsAffected())
 
+	builderDelete = sq.Delete("\"message\"").
+		PlaceholderFormat(sq.Dollar).
+		Where(sq.Eq{"chat_id": req.GetId()})
+
+	query, args, err = builderDelete.ToSql()
+	if err != nil {
+		log.Fatalf("failed to build query: %v", err)
+	}
+
+	res, err = s.pool.Exec(ctx, query, args...)
+	if err != nil {
+		log.Fatalf("failed to delete message: %v", err)
+	}
+
+	log.Printf("delete %d rows from message", res.RowsAffected())
+
 	builderDelete = sq.Delete("\"chat\"").
 		PlaceholderFormat(sq.Dollar).
 		Where(sq.Eq{"chat_id": req.GetId()})
@@ -195,7 +215,7 @@ func (s *server) SendMessage(ctx context.Context, req *desc.SendMessageRequest) 
 	log.Printf("Chat ID: %d, Send message: %v from %v at %v", req.GetChatId(), req.GetMessage(), req.GetFrom(), req.GetTimestamp())
 
 	// Делаем запрос на выборку записей из таблицы note
-	builderSelect := sq.Select("count(chat_id)").
+	builderSelect := sq.Select("chat_id").
 		From("chat").
 		PlaceholderFormat(sq.Dollar).
 		Where(sq.Eq{"chat_id": req.GetChatId()})
@@ -205,14 +225,13 @@ func (s *server) SendMessage(ctx context.Context, req *desc.SendMessageRequest) 
 		log.Fatalf("failed to build query: %v", err)
 	}
 
-	var total int
-	err = s.pool.QueryRow(ctx, query, args...).Scan(&total)
+	var chatID int64
+	err = s.pool.QueryRow(ctx, query, args...).Scan(&chatID)
 	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, status.Error(codes.NotFound, "chat not found")
+		}
 		log.Fatalf("failed to select chat: %v", err)
-	}
-
-	if total == 0 {
-		return nil, fmt.Errorf("chat not found")
 	}
 
 	var sentAt *time.Time
