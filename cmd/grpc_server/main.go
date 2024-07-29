@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"flag"
-	"fmt"
 	"log"
 	"net"
 	"time"
@@ -79,13 +78,13 @@ func (s *server) Create(ctx context.Context, req *desc.CreateRequest) (*desc.Cre
 
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("failed to acquire connection: %v", err)
+		return nil, status.Errorf(codes.Internal, "failed to acquire connection: %v", err)
 	}
 	defer conn.Release()
 
 	tx, err := conn.Begin(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("failed to begin transaction: %v", err)
+		return nil, status.Errorf(codes.Internal, "failed to begin transaction: %v", err)
 	}
 	//nolint:errcheck
 	defer tx.Rollback(ctx)
@@ -132,7 +131,7 @@ func (s *server) Create(ctx context.Context, req *desc.CreateRequest) (*desc.Cre
 
 	err = tx.Commit(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("failed to commit transaction: %v", err)
+		return nil, status.Errorf(codes.Internal, "failed to commit transaction: %v", err)
 	}
 
 	return &desc.CreateResponse{
@@ -145,13 +144,13 @@ func (s *server) Delete(ctx context.Context, req *desc.DeleteRequest) (*empty.Em
 
 	conn, err := s.pool.Acquire(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("failed to acquire connection: %v", err)
+		return nil, status.Errorf(codes.Internal, "failed to acquire connection: %v", err)
 	}
 	defer conn.Release()
 
 	tx, err := conn.Begin(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("failed to begin transaction: %v", err)
+		return nil, status.Errorf(codes.Internal, "failed to begin transaction: %v", err)
 	}
 	//nolint:errcheck
 	defer tx.Rollback(ctx)
@@ -204,7 +203,7 @@ func (s *server) Delete(ctx context.Context, req *desc.DeleteRequest) (*empty.Em
 
 	err = tx.Commit(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("failed to commit transaction: %v", err)
+		return nil, status.Errorf(codes.Internal, "failed to commit transaction: %v", err)
 	}
 
 	log.Printf("delete %d rows from chat", res.RowsAffected())
