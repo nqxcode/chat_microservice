@@ -55,9 +55,9 @@ install-docker-buildx:
     chmod +x ~/.docker/cli-plugins/docker-buildx
 
 docker-build-and-push:
-	docker buildx build --no-cache --platform linux/amd64 -t cr.selcloud.ru/nqxcode/chat-microservice:v0.0.1 .
-	docker login -u token -p CRgAAAAAKdXq01MqaP3-K1rqJ8seds9hr-Rq701c cr.selcloud.ru/nqxcode
-	docker push cr.selcloud.ru/nqxcode/chat-microservice:v0.0.1
+	docker buildx build --no-cache --platform linux/amd64 -t cr.selcloud.ru/nqxcode/chat-microservice:v0.0.2 .
+	docker login -u token -p ${REGISTRY_TOKEN} cr.selcloud.ru/nqxcode
+	docker push cr.selcloud.ru/nqxcode/chat-microservice:v0.0.2
 
 
 local-migration-status:
