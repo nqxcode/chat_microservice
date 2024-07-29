@@ -10,7 +10,7 @@ create table chat
 create table message
 (
     message_id bigserial primary key,
-    chat_id    bigint    not null REFERENCES chat (chat_id),
+    chat_id    bigint    not null references chat (chat_id),
     "from"     text      not null,
     message    text      not null,
     sent_at    timestamp not null,
