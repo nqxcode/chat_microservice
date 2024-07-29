@@ -47,7 +47,7 @@ build-target:
 
 
 copy-to-server:
-	scp ./bin/grpc_server root@45.145.65.125:/root/chat_grpc_server
+	scp ./bin/grpc_server root@${REGISTRY_HOST}:/root/chat_grpc_server
 
 install-docker-buildx:
 	mkdir -p ~/.docker/cli-plugins && \
