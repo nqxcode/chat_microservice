@@ -138,6 +138,9 @@ jobs:
             CONTAINER_NAME="chat-microservice-container"
             MIGRATION_CONTAINER_NAME="chat-microservice-migration-container"
             
+            NETWORK="chat_network"
+            VOLUME="chat_postgres_volume"
+            
             # Run a new containers from a new images
             docker run -d --name $POSTGRES_CONTAINER_NAME --network $NETWORK -v $VOLUME:/var/lib/postgresql/data -e POSTGRES_USER=${{ secrets.POSTGRES_USER }} -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} -e POSTGRES_DB=${{ secrets.POSTGRES_DB }} -t $POSTGRES_IMAGE_NAME
             #docker run -d --name $MIGRATION_CONTAINER_NAME --network $NETWORK -e MIGRATION_DIR=./migrations -e MIGRATION_DSN=${{ secrets.MIGRATION_DSN }} $REGISTRY/$MIGRATION_IMAGE_NAME:$TAG_NAME
