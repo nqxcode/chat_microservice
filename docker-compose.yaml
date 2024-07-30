@@ -2,7 +2,6 @@ version: '3'
 
 volumes:
   postgres_volume:
-  postgres_volume_prod:
 
 services:
   pg-chat:
@@ -14,23 +13,8 @@ services:
     volumes:
       - postgres_volume:/var/lib/postgresql/data
 
-  pg-chat-prod:
-    image: postgres:14-alpine3.17
-    env_file:
-      - .env.prod
-    ports:
-      - "64321:5432"
-    volumes:
-      - postgres_volume_prod:/var/lib/postgresql/data
-
   migrator:
     build:
       context: .
       dockerfile: migration.Dockerfile
-    restart: on-failure
-
-  migrator-prod:
-    build:
-      context: .
-      dockerfile: migration_prod.Dockerfile
     restart: on-failure
