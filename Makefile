@@ -58,7 +58,7 @@ install-docker-buildx:
 
 docker-build-and-push:
 	docker buildx build --no-cache --platform linux/amd64 -t cr.selcloud.ru/nqxcode/chat-microservice:$(GIT_SHA) -f ./Dockerfile .
-	docker buildx build --no-cache --platform linux/amd64 -t cr.selcloud.ru/nqxcode/chat-microservice-migration:$(GIT_SHA) -f ./migration_prod.Dockerfile .
+	docker buildx build --no-cache --platform linux/amd64 -t cr.selcloud.ru/nqxcode/chat-microservice-migration:$(GIT_SHA) -f ./migration.Dockerfile .
 	docker login -u token -p ${REGISTRY_PASSWORD} $(REGISTRY)
 	docker push $(REGISTRY)/chat-microservice:$(GIT_SHA)
 	docker push $(REGISTRY)/chat-microservice-migration:$(GIT_SHA)
