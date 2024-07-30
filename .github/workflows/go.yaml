@@ -16,6 +16,7 @@ env:
   POSTGRES_CONTAINER_NAME: "postgres-container"
   VOLUME: "chat_postgres_volume"
   NETWORK: "chat_network"
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -116,6 +117,10 @@ jobs:
         
             #docker network ls | grep $NETWORK || docker network create $NETWORK
             #docker volume ls | grep $VOLUME || docker volume create $VOLUME
+            
+            CONTAINER_NAME="chat-microservice-container"
+            MIGRATION_CONTAINER_NAME="chat-microservice-migration-container"
+            POSTGRES_CONTAINER_NAME="postgres-container"
             
             # Stop running containers
             docker stop $CONTAINER_NAME
