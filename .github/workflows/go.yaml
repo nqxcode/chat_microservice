@@ -118,19 +118,15 @@ jobs:
             #docker network ls | grep $NETWORK || docker network create $NETWORK
             #docker volume ls | grep $VOLUME || docker volume create $VOLUME
             
-            CONTAINER_NAME="chat-microservice-container"
-            MIGRATION_CONTAINER_NAME="chat-microservice-migration-container"
-            POSTGRES_CONTAINER_NAME="postgres-container"
-            
             # Stop running containers
-            docker stop $CONTAINER_NAME
-            docker stop $MIGRATION_CONTAINER_NAME
-            docker stop $POSTGRES_CONTAINER_NAME
+            #docker stop $CONTAINER_NAME
+            #docker stop $MIGRATION_CONTAINER_NAME
+            #docker stop $POSTGRES_CONTAINER_NAME
             
             # Remove old containers
-            docker rm $CONTAINER_NAME
-            docker rm $MIGRATION_CONTAINER_NAME
-            docker rm $POSTGRES_CONTAINER_NAME
+            #docker rm $CONTAINER_NAME
+            #docker rm $MIGRATION_CONTAINER_NAME
+            #docker rm $POSTGRES_CONTAINER_NAME
             
             # Run a new containers from a new images
             docker run -d --name $POSTGRES_CONTAINER_NAME --network $NETWORK -v $VOLUME:/var/lib/postgresql/data -e POSTGRES_USER=${{ secrets.POSTGRES_USER }} -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} -e POSTGRES_DB=${{ secrets.POSTGRES_DB }} $POSTGRES_IMAGE_NAME
