@@ -128,6 +128,16 @@ jobs:
             #docker rm $MIGRATION_CONTAINER_NAME
             #docker rm $POSTGRES_CONTAINER_NAME
             
+            REGISTRY="cr.selcloud.ru/nqxcode"
+            
+            POSTGRES_IMAGE_NAME="postgres:14-alpine3.17"
+            IMAGE_NAME="chat-microservice"
+            MIGRATION_IMAGE_NAME="chat-microservice-migration"
+            
+            POSTGRES_CONTAINER_NAME="postgres-container"
+            CONTAINER_NAME="chat-microservice-container"
+            MIGRATION_CONTAINER_NAME="chat-microservice-migration-container"
+            
             # Run a new containers from a new images
             docker run -d --name $POSTGRES_CONTAINER_NAME --network $NETWORK -v $VOLUME:/var/lib/postgresql/data -e POSTGRES_USER=${{ secrets.POSTGRES_USER }} -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} -e POSTGRES_DB=${{ secrets.POSTGRES_DB }} $POSTGRES_IMAGE_NAME
             docker run -d --name $MIGRATION_CONTAINER_NAME --network $NETWORK -e MIGRATION_DIR=./migrations -e MIGRATION_DSN=${{ secrets.MIGRATION_DSN }} $REGISTRY/$MIGRATION_IMAGE_NAME:$TAG_NAME
