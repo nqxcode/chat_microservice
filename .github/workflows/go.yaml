@@ -114,8 +114,8 @@ jobs:
             # Login into Selectel Registry
             docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} $REGISTRY
         
-            docker network ls | grep $NETWORK || docker network create $NETWORK
-            docker volume ls | grep $VOLUME || docker volume create $VOLUME
+            #docker network ls | grep $NETWORK || docker network create $NETWORK
+            #docker volume ls | grep $VOLUME || docker volume create $VOLUME
             
             # Stop running containers
             docker stop $CONTAINER_NAME
