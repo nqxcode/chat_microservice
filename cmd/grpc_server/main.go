@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"flag"
-	"fmt"
 	"log"
 	"net"
 	"time"
@@ -58,7 +57,6 @@ func main() {
 	}
 
 	pool, err := pgxpool.Connect(ctx, pgConfig.DSN())
-	fmt.Println("PG DSN: ", pgConfig.DSN())
 	if err != nil {
 		log.Fatalf("failed to connect to database: %v", err)
 	}
