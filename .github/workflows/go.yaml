@@ -97,6 +97,7 @@ jobs:
           docker buildx build --no-cache --push --tag $REGISTRY/$IMAGE_NAME:$TAG_NAME -f ./Dockerfile ./
           docker buildx build --no-cache --push --tag $REGISTRY/$MIGRATION_IMAGE_NAME:$TAG_NAME -f ./migration.Dockerfile ./
 
+
   deploy-image:
     runs-on: ubuntu-latest
     needs: image-build-and-push
@@ -112,13 +113,7 @@ jobs:
           key: ${{ secrets.SSHKEY }}
           script: |
             # Set up variables
-            TAG_NAME=$(echo ${{ env.GITHUB_SHA }} | head -c7)
-            
-            # Login into Selectel Registry
-            docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} $REGISTRY
-            
-            #TAG_NAME=549b8df
-            
+            TAG_NAME=$(echo ${{ env.GITHUB_SHA }} | head -c7)            
             REGISTRY=${{ env.REGISTRY }}
             IMAGE_NAME=${{ env.IMAGE_NAME }}
             CONTAINER_NAME=${{ env.CONTAINER_NAME }}
@@ -128,6 +123,9 @@ jobs:
             POSTGRES_CONTAINER_NAME=${{ env.POSTGRES_CONTAINER_NAME }}
             POSTGRES_VOLUME=${{ env.POSTGRES_VOLUME }}
             NETWORK=${{ env.NETWORK }}
+            
+            # Login into Selectel Registry
+            docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} $REGISTRY
             
             docker network ls | grep $NETWORK || docker network create $NETWORK
             docker volume ls | grep $POSTGRES_VOLUME || docker volume create $POSTGRES_VOLUME
