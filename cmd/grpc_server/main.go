@@ -5,6 +5,7 @@ import (
 	"flag"
 	"log"
 	"net"
+	"syscall"
 	"time"
 
 	"github.com/nqxcode/chat_microservice/internal/config"
@@ -38,7 +39,11 @@ func main() {
 
 	err := config.Load(configPath)
 	if err != nil {
-		log.Printf("No %s file found, using environment variables: %v", configPath, err)
+		if errors.Is(err, syscall.ERROR_FILE_NOT_FOUND) {
+			log.Printf("No %s file found, using environment variables", configPath)
+		} else {
+			log.Fatalf("Error loading config: %v", err)
+		}
 	}
 
 	grpcConfig, err := config.NewGRPCConfig()
