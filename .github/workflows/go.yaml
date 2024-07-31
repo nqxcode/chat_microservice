@@ -9,9 +9,9 @@ on:
 env:
   REGISTRY: "cr.selcloud.ru/nqxcode"
   IMAGE_NAME: "chat-microservice"
-  CONTAINER_NAME: "chat-microservice-container"
+  CONTAINER_NAME: "chat-microservice"
   MIGRATION_IMAGE_NAME: "chat-microservice-migration"
-  MIGRATION_CONTAINER_NAME: "chat-microservice-migration-container"
+  MIGRATION_CONTAINER_NAME: "chat-microservice-migration"
   POSTGRES_IMAGE_NAME: "postgres:14-alpine3.17"
   POSTGRES_CONTAINER_NAME: "chat-postgres"
   POSTGRES_VOLUME: "chat-postgres-volume"
@@ -117,14 +117,14 @@ jobs:
             
             TAG_NAME=549b8df
             REGISTRY="cr.selcloud.ru/nqxcode"
-            
+          
             POSTGRES_IMAGE_NAME="postgres:14-alpine3.17"
             IMAGE_NAME="chat-microservice"
             MIGRATION_IMAGE_NAME="chat-microservice-migration"
             
             POSTGRES_CONTAINER_NAME="chat-postgres"
-            CONTAINER_NAME="chat-microservice-container"
-            MIGRATION_CONTAINER_NAME="chat-microservice-migration-container"
+            CONTAINER_NAME="chat-microservice"
+            MIGRATION_CONTAINER_NAME="chat-microservice-migration"
             
             NETWORK="chat-network"
             POSTGRES_VOLUME="chat-postgres-volume"
