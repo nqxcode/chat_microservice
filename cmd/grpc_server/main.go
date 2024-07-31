@@ -218,7 +218,6 @@ func (s *server) Delete(ctx context.Context, req *desc.DeleteRequest) (*empty.Em
 func (s *server) SendMessage(ctx context.Context, req *desc.SendMessageRequest) (*empty.Empty, error) {
 	log.Printf("Chat ID: %d, Send message: %v from %v at %v", req.GetChatId(), req.GetMessage(), req.GetFrom(), req.GetTimestamp())
 
-	// Делаем запрос на выборку записей из таблицы note
 	builderSelect := sq.Select("chat_id").
 		From("chat").
 		PlaceholderFormat(sq.Dollar).
