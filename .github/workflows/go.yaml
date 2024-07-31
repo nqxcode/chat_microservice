@@ -134,12 +134,12 @@ jobs:
             # Stop running containers
             docker stop $POSTGRES_CONTAINER_NAME
             docker stop $MIGRATION_CONTAINER_NAME
-            #docker stop $CONTAINER_NAME
+            docker stop $CONTAINER_NAME
             
             # Remove old containers
             docker rm $POSTGRES_CONTAINER_NAME
             docker rm $MIGRATION_CONTAINER_NAME
-            #docker rm $CONTAINER_NAME
+            docker rm $CONTAINER_NAME
             
             # Run a new containers from a new images
             #docker run -d --name $POSTGRES_CONTAINER_NAME --network $NETWORK -v $POSTGRES_VOLUME:/var/lib/postgresql/data -e POSTGRES_USER="${{ secrets.POSTGRES_USER }}" -e POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" -e POSTGRES_DB="${{ secrets.POSTGRES_DB }}" -t $POSTGRES_IMAGE_NAME          
