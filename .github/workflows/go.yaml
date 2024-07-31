@@ -133,12 +133,12 @@ jobs:
             
             # Stop running containers
             docker stop $POSTGRES_CONTAINER_NAME
-            #docker stop $MIGRATION_CONTAINER_NAME
+            docker stop $MIGRATION_CONTAINER_NAME
             #docker stop $CONTAINER_NAME
             
             # Remove old containers
             docker rm $POSTGRES_CONTAINER_NAME
-            #docker rm $MIGRATION_CONTAINER_NAME
+            docker rm $MIGRATION_CONTAINER_NAME
             #docker rm $CONTAINER_NAME
             
             # Run a new containers from a new images
