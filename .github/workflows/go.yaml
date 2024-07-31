@@ -129,8 +129,8 @@ jobs:
             NETWORK="chat-network"
             POSTGRES_VOLUME="chat-postgres-volume"
             
-            #docker network ls | grep $NETWORK || docker network create $NETWORK
-            #docker volume ls | grep $POSTGRES_VOLUME || docker volume create $POSTGRES_VOLUME
+            docker network ls | grep $NETWORK || docker network create $NETWORK
+            docker volume ls | grep $POSTGRES_VOLUME || docker volume create $POSTGRES_VOLUME
             
             # Stop running containers
             docker stop $POSTGRES_CONTAINER_NAME
