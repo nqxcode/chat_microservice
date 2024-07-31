@@ -126,6 +126,8 @@ jobs:
             CONTAINER_NAME="chat-microservice"
             MIGRATION_CONTAINER_NAME="chat-microservice-migration"
             
+            NETWORK="chat-network"
+            POSTGRES_VOLUME="chat-postgres-volume"
             
             docker network ls | grep $NETWORK || docker network create $NETWORK
             docker volume ls | grep $POSTGRES_VOLUME || docker volume create $POSTGRES_VOLUME
