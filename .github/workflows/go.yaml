@@ -138,7 +138,7 @@ jobs:
             CONTAINER_NAME="chat-microservice"
             MIGRATION_CONTAINER_NAME="chat-microservice-migration"
             
-            #NETWORK="chat-network"
+            NETWORK="chat-network"
             POSTGRES_VOLUME="chat-postgres-volume"
             
             docker network ls | grep $NETWORK || docker network create $NETWORK
