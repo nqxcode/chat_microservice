@@ -14,7 +14,7 @@ env:
   MIGRATION_CONTAINER_NAME: "chat-microservice-migration-container"
   POSTGRES_IMAGE_NAME: "postgres:14-alpine3.17"
   POSTGRES_CONTAINER_NAME: "chat-postgres"
-  VOLUME: "chat-postgres-volume"
+  POSTGRES_VOLUME: "chat-postgres-volume"
   NETWORK: "chat-network"
 
 jobs:
@@ -126,10 +126,10 @@ jobs:
             MIGRATION_CONTAINER_NAME="chat-microservice-migration-container"
             
             NETWORK="chat-network"
-            VOLUME="chat-postgres-volume"
+            POSTGRES_VOLUME="chat-postgres-volume"
             
             #docker network ls | grep $NETWORK || docker network create $NETWORK
-            #docker volume ls | grep $VOLUME || docker volume create $VOLUME
+            #docker volume ls | grep $POSTGRES_VOLUME || docker volume create $POSTGRES_VOLUME
             
             # Stop running containers
             docker stop $POSTGRES_CONTAINER_NAME
@@ -142,9 +142,9 @@ jobs:
             #docker rm $CONTAINER_NAME
             
             # Run a new containers from a new images
-            #docker run -d --name $POSTGRES_CONTAINER_NAME --network $NETWORK -v $VOLUME:/var/lib/postgresql/data -e POSTGRES_USER="${{ secrets.POSTGRES_USER }}" -e POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" -e POSTGRES_DB="${{ secrets.POSTGRES_DB }}" -t $POSTGRES_IMAGE_NAME          
+            #docker run -d --name $POSTGRES_CONTAINER_NAME --network $NETWORK -v $POSTGRES_VOLUME:/var/lib/postgresql/data -e POSTGRES_USER="${{ secrets.POSTGRES_USER }}" -e POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" -e POSTGRES_DB="${{ secrets.POSTGRES_DB }}" -t $POSTGRES_IMAGE_NAME          
             #docker run -d --name $MIGRATION_CONTAINER_NAME --network $NETWORK -e MIGRATION_DIR=./migrations -e MIGRATION_DSN="${{ secrets.MIGRATION_DSN }}" -t $REGISTRY/$MIGRATION_IMAGE_NAME:$TAG_NAME
             #docker run -d --name $CONTAINER_NAME --network $NETWORK -p 50052:50052 -e PG_DSN="${{ secrets.PG_DSN }}" -e GRPC_HOST=0.0.0.0 -e GRPC_PORT=50052 $REGISTRY/$IMAGE_NAME:$TAG_NAME
 
-            docker run -d --name chat-postgres --network chat-network -v chat-postgres-volume:/var/lib/postgresql/data -e POSTGRES_USER=chat-user -e POSTGRES_PASSWORD=chat-password -e POSTGRES_DB=chat postgres:14-alpine3.17
+            docker run -d --name $POSTGRES_CONTAINER_NAME --network $NETWORK -v $POSTGRES_VOLUME:/var/lib/postgresql/data -e POSTGRES_USER="${{ secrets.POSTGRES_USER }}" -e POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" -e POSTGRES_DB="${{ secrets.POSTGRES_DB }}" postgres:14-alpine3.17
             docker run -d --name "chat-microservice-migration-container" --network chat-network -e MIGRATION_DIR=./migrations -e MIGRATION_DSN="host=chat-postgres port=5432 dbname=chat user=chat-user password=chat-password sslmode=disable" -t cr.selcloud.ru/nqxcode/chat-microservice-migration:58923d8
