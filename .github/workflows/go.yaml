@@ -102,18 +102,6 @@ jobs:
     needs: image-build-and-push
 
     steps:
-      - name: Set up environment variables
-        env:
-          REGISTRY: ${{ env.REGISTRY }}
-          IMAGE_NAME: ${{ env.IMAGE_NAME }}
-          CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
-          MIGRATION_IMAGE_NAME: ${{ env.MIGRATION_IMAGE_NAME }}
-          MIGRATION_CONTAINER_NAME: ${{ env.MIGRATION_CONTAINER_NAME }}
-          POSTGRES_IMAGE_NAME: ${{ env.POSTGRES_IMAGE_NAME }}
-          POSTGRES_CONTAINER_NAME: ${{ env.POSTGRES_CONTAINER_NAME }}
-          POSTGRES_VOLUME: ${{ env.POSTGRES_VOLUME }}
-          NETWORK: ${{ env.NETWORK }}
-        run: echo "Environment variables set"
       - name: Deploy to Selectel Cloud via SSH action
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -128,18 +116,16 @@ jobs:
             docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} $REGISTRY
             
             TAG_NAME=549b8df
-            REGISTRY="cr.selcloud.ru/nqxcode"
-          
-            POSTGRES_IMAGE_NAME="postgres:14-alpine3.17"
-            IMAGE_NAME="chat-microservice"
-            MIGRATION_IMAGE_NAME="chat-microservice-migration"
             
-            POSTGRES_CONTAINER_NAME="chat-postgres"
-            CONTAINER_NAME="chat-microservice"
-            MIGRATION_CONTAINER_NAME="chat-microservice-migration"
-            
-            NETWORK="chat-network"
-            POSTGRES_VOLUME="chat-postgres-volume"
+            REGISTRY=${{ env.REGISTRY }}
+            IMAGE_NAME=${{ env.IMAGE_NAME }}
+            CONTAINER_NAME=${{ env.CONTAINER_NAME }}
+            MIGRATION_IMAGE_NAME=${{ env.MIGRATION_IMAGE_NAME }}
+            MIGRATION_CONTAINER_NAME=${{ env.MIGRATION_CONTAINER_NAME }}
+            POSTGRES_IMAGE_NAME=${{ env.POSTGRES_IMAGE_NAME }}
+            POSTGRES_CONTAINER_NAME=${{ env.POSTGRES_CONTAINER_NAME }}
+            POSTGRES_VOLUME=${{ env.POSTGRES_VOLUME }}
+            NETWORK=${{ env.NETWORK }}
             
             docker network ls | grep $NETWORK || docker network create $NETWORK
             docker volume ls | grep $POSTGRES_VOLUME || docker volume create $POSTGRES_VOLUME
