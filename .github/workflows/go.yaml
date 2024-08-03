@@ -146,7 +146,7 @@ jobs:
             POSTGRES_DB=${{ secrets.POSTGRES_DB }}
             EOF
             
-            source .env.chat
+            #source .env.chat
             
             docker network ls | grep $NETWORK || docker network create $NETWORK
             docker volume ls | grep $POSTGRES_VOLUME || docker volume create $POSTGRES_VOLUME
