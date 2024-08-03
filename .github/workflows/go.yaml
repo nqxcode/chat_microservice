@@ -189,5 +189,5 @@ jobs:
 
             EOF
             
-            docker compose -f docker-compose.chat.yaml down --volumes
+            docker compose -f docker-compose.chat.yaml down
             docker compose -f docker-compose.chat.yaml up -d
