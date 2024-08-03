@@ -141,8 +141,8 @@ jobs:
             POSTGRES_VOLUME=${{ env.POSTGRES_VOLUME }}
             NETWORK=${{ env.NETWORK }}
             GRPC_PORT=${{ env.GRPC_PORT }}
-            MIGRATION_DSN=${{ secrets.MIGRATION_DSN }}
-            PG_DSN=${{ secrets.PG_DSN }}
+            MIGRATION_DSN="${{ secrets.MIGRATION_DSN }}"
+            PG_DSN="${{ secrets.PG_DSN }}"
             POSTGRES_USER=${{ secrets.POSTGRES_USER }}
             POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
             POSTGRES_DB=${{ secrets.POSTGRES_DB }}
