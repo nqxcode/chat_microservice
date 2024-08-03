@@ -151,6 +151,7 @@ jobs:
             source .env.chat
             
             cat <<EOF > docker-compose.chat.yaml
+            
             version: '3'
             volumes:
               ${POSTGRES_VOLUME}:
