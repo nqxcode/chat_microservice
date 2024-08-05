@@ -86,8 +86,7 @@ func (s *server) Create(ctx context.Context, req *desc.CreateRequest) (*desc.Cre
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to begin transaction: %v", err)
 	}
-	//nolint:errcheck
-	defer tx.Rollback(ctx)
+	defer tx.Rollback(ctx) //nolint:errcheck
 
 	builderInsert := sq.Insert("\"chat\"").
 		PlaceholderFormat(sq.Dollar).
@@ -152,8 +151,7 @@ func (s *server) Delete(ctx context.Context, req *desc.DeleteRequest) (*empty.Em
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to begin transaction: %v", err)
 	}
-	//nolint:errcheck
-	defer tx.Rollback(ctx)
+	defer tx.Rollback(ctx) //nolint:errcheck
 
 	builderDelete := sq.Delete("\"chat_to_user\"").
 		PlaceholderFormat(sq.Dollar).
