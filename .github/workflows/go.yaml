@@ -2,9 +2,9 @@ name: Go
 
 on:
   push:
-    branches: [ main, master, week_1, week_2 ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master, week_1, week_2 ]
+    branches: [ main, week_1, week_2, week_3 ]
 
 env:
   REGISTRY: "cr.selcloud.ru/nqxcode"
@@ -97,6 +97,7 @@ jobs:
           docker buildx create --use
           docker buildx build --no-cache --push --tag $REGISTRY/$IMAGE_NAME:$TAG_NAME -f ./Dockerfile ./
           docker buildx build --no-cache --push --tag $REGISTRY/$MIGRATION_IMAGE_NAME:$TAG_NAME -f ./migration.Dockerfile ./
+
 
 
   deploy-image:
