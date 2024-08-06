@@ -191,3 +191,4 @@ jobs:
             
             docker compose -f docker-compose.chat.yaml down
             docker compose -f docker-compose.chat.yaml up -d
+
