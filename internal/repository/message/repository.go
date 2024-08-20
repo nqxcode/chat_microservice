@@ -73,7 +73,7 @@ func (r *repo) Get(ctx context.Context, chatID int64, limit repository.Limit) ([
 	}
 
 	q := db.Query{
-		Name:     tableName + "_repository.GetAll",
+		Name:     tableName + "_repository.Get",
 		QueryRaw: query,
 	}
 

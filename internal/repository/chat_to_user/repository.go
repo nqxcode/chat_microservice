@@ -55,11 +55,13 @@ func (r *repo) Create(ctx context.Context, model *model.ChatToUser) (int64, erro
 	return id, nil
 }
 
-func (r *repo) GetAll(ctx context.Context, chatID int64) ([]model.ChatToUser, error) {
+func (r *repo) Get(ctx context.Context, chatID int64, limit repository.Limit) ([]model.ChatToUser, error) {
 	builder := sq.Select(idColumn, chatIDColumn, userIDColumn, createdAtColumn).
 		PlaceholderFormat(sq.Dollar).
 		From(tableName).
-		Where(sq.Eq{chatIDColumn: chatID})
+		Where(sq.Eq{chatIDColumn: chatID}).
+		Offset(limit.Offset).
+		Limit(limit.Limit)
 
 	query, args, err := builder.ToSql()
 	if err != nil {
@@ -67,7 +69,7 @@ func (r *repo) GetAll(ctx context.Context, chatID int64) ([]model.ChatToUser, er
 	}
 
 	q := db.Query{
-		Name:     tableName + "_repository.GetAll",
+		Name:     tableName + "_repository.Get",
 		QueryRaw: query,
 	}
 

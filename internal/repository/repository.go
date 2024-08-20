@@ -14,7 +14,7 @@ type ChatRepository interface {
 
 type ChatToUserRepository interface {
 	Create(ctx context.Context, model *model.ChatToUser) (int64, error)
-	GetAll(ctx context.Context, chatID int64) ([]model.ChatToUser, error)
+	Get(ctx context.Context, chatID int64, limit Limit) ([]model.ChatToUser, error)
 	DeleteByChatID(ctx context.Context, chatID int64) error
 }
 
