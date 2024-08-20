@@ -6,13 +6,8 @@ import (
 )
 
 type Chat struct {
-	ID        int64
-	Info      ChatInfo
+	ID        int64 `db:"chat_id"`
+	Name      string
 	CreatedAt time.Time
 	UpdatedAt sql.NullTime
-}
-
-type ChatInfo struct {
-	Name    string
-	UserIDs []int64
 }

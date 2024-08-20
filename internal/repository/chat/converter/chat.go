@@ -9,16 +9,9 @@ func ToChatFromRepo(chat *modelRepo.Chat) *model.Chat {
 	return &model.Chat{
 		ID: chat.ID,
 		Info: model.ChatInfo{
-			Name: chat.Info.Name,
+			Name: chat.Name,
 		},
 		CreatedAt: chat.CreatedAt,
 		UpdatedAt: chat.UpdatedAt,
-	}
-}
-
-func ToChatInfoFromRepo(info modelRepo.ChatInfo) model.ChatInfo {
-	return model.ChatInfo{
-		Name:    info.Name,
-		UserIDs: info.UserIDs,
 	}
 }

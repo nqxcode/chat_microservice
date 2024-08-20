@@ -2,12 +2,12 @@ package chat
 
 import (
 	"context"
-
 	"github.com/nqxcode/chat_microservice/internal/model"
 )
 
 func (s *service) Create(ctx context.Context, info *model.ChatInfo) (int64, error) {
 	var chatID int64
+
 	err := s.txManager.ReadCommitted(ctx, func(ctx context.Context) error {
 		var errTx error
 		chatID, errTx = s.chatRepository.Create(ctx, info)
