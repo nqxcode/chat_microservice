@@ -8,7 +8,6 @@ import (
 )
 
 func (s *service) Delete(ctx context.Context, id int64) error {
-
 	err := s.txManager.ReadCommitted(ctx, func(ctx context.Context) error {
 		var errTx error
 

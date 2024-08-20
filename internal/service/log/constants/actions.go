@@ -1,7 +1,10 @@
 package constants
 
-// ChatCreated log action
+// ChatCreated chat created log action
 const ChatCreated = "chat created"
 
-// ChatDeleted log action
+// ChatDeleted chat deleted log action
 const ChatDeleted = "chat deleted"
+
+// SendMessage send message log action
+const SendMessage = "send message"
