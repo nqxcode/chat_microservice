@@ -7,8 +7,10 @@ import (
 
 func ToChatFromRepo(chat *modelRepo.Chat) *model.Chat {
 	return &model.Chat{
-		ID:        chat.ID,
-		Info:      ToChatInfoFromRepo(chat.Info),
+		ID: chat.ID,
+		Info: model.ChatInfo{
+			Name: chat.Info.Name,
+		},
 		CreatedAt: chat.CreatedAt,
 		UpdatedAt: chat.UpdatedAt,
 	}

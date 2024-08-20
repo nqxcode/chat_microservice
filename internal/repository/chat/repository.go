@@ -15,7 +15,7 @@ import (
 const (
 	tableName = "chat"
 
-	idColumn        = "id"
+	idColumn        = "chat_id"
 	nameColumn      = "name"
 	createdAtColumn = "created_at"
 	updatedAtColumn = "updated_at"
@@ -29,12 +29,12 @@ func NewRepository(db db.Client) repository.ChatRepository {
 	return &repo{db: db}
 }
 
-func (r *repo) Create(ctx context.Context, info *model.ChatInfo) (int64, error) {
+func (r *repo) Create(ctx context.Context, model *model.ChatInfo) (int64, error) {
 	builder := sq.Insert(tableName).
 		PlaceholderFormat(sq.Dollar).
 		Columns(nameColumn).
-		Values(info.Name).
-		Suffix("RETURNING id")
+		Values(model.Name).
+		Suffix("RETURNING " + idColumn)
 
 	query, args, err := builder.ToSql()
 	if err != nil {
@@ -42,7 +42,7 @@ func (r *repo) Create(ctx context.Context, info *model.ChatInfo) (int64, error) 
 	}
 
 	q := db.Query{
-		Name:     "chat_repository.Create",
+		Name:     tableName + ".Create",
 		QueryRaw: query,
 	}
 
@@ -55,7 +55,30 @@ func (r *repo) Create(ctx context.Context, info *model.ChatInfo) (int64, error) 
 	return id, nil
 }
 
-func (r *repo) Get(ctx context.Context, id int64) (*model.Chat, error) {
+func (r *repo) Delete(ctx context.Context, id int64) error {
+	builder := sq.Delete(tableName).
+		PlaceholderFormat(sq.Dollar).
+		Where(sq.Eq{idColumn: id})
+
+	query, args, err := builder.ToSql()
+	if err != nil {
+		return err
+	}
+
+	q := db.Query{
+		Name:     tableName + ".Delete",
+		QueryRaw: query,
+	}
+
+	_, err = r.db.DB().ExecContext(ctx, q, args...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *repo) Find(ctx context.Context, id int64) (*model.Chat, error) {
 	builder := sq.Select(idColumn, nameColumn, createdAtColumn, updatedAtColumn).
 		PlaceholderFormat(sq.Dollar).
 		From(tableName).
@@ -68,12 +91,12 @@ func (r *repo) Get(ctx context.Context, id int64) (*model.Chat, error) {
 	}
 
 	q := db.Query{
-		Name:     "chat_repository.Get",
+		Name:     tableName + ".Find",
 		QueryRaw: query,
 	}
 
 	var chat modelRepo.Chat
-	err = r.db.DB().QueryRowContext(ctx, q, args...).Scan(&chat.ID, &chat.Info.Name, &chat.CreatedAt, &chat.UpdatedAt)
+	err = r.db.DB().ScanOneContext(ctx, &chat, q, args...)
 	if err != nil {
 		return nil, err
 	}

@@ -12,6 +12,8 @@ import (
 	"github.com/nqxcode/chat_microservice/internal/config"
 	"github.com/nqxcode/chat_microservice/internal/repository"
 	chatRepository "github.com/nqxcode/chat_microservice/internal/repository/chat"
+	chatToUserRepository "github.com/nqxcode/chat_microservice/internal/repository/chat_to_user"
+	messageRepository "github.com/nqxcode/chat_microservice/internal/repository/message"
 	"github.com/nqxcode/chat_microservice/internal/service"
 	chatService "github.com/nqxcode/chat_microservice/internal/service/chat"
 )
@@ -20,9 +22,11 @@ type serviceProvider struct {
 	pgConfig   config.PGConfig
 	grpcConfig config.GRPCConfig
 
-	dbClient       db.Client
-	txManager      db.TxManager
-	chatRepository repository.ChatRepository
+	dbClient             db.Client
+	txManager            db.TxManager
+	chatRepository       repository.ChatRepository
+	chatToUserRepository repository.ChatToUserRepository
+	messageRepository    repository.MessageRepository
 
 	chatService service.ChatService
 
@@ -94,10 +98,28 @@ func (s *serviceProvider) ChatRepository(ctx context.Context) repository.ChatRep
 	return s.chatRepository
 }
 
+func (s *serviceProvider) ChatToUserRepository(ctx context.Context) repository.ChatToUserRepository {
+	if s.chatToUserRepository == nil {
+		s.chatToUserRepository = chatToUserRepository.NewRepository(s.DBClient(ctx))
+	}
+
+	return s.chatToUserRepository
+}
+
+func (s *serviceProvider) MessageRepository(ctx context.Context) repository.MessageRepository {
+	if s.messageRepository == nil {
+		s.messageRepository = messageRepository.NewRepository(s.DBClient(ctx))
+	}
+
+	return s.messageRepository
+}
+
 func (s *serviceProvider) ChatService(ctx context.Context) service.ChatService {
 	if s.chatService == nil {
 		s.chatService = chatService.NewService(
 			s.ChatRepository(ctx),
+			s.ChatToUserRepository(ctx),
+			s.MessageRepository(ctx),
 			s.TxManager(ctx),
 		)
 	}

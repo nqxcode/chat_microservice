@@ -1,0 +1,107 @@
+package message
+
+import (
+	"context"
+	sq "github.com/Masterminds/squirrel"
+	"github.com/nqxcode/chat_microservice/internal/client/db"
+	"github.com/nqxcode/chat_microservice/internal/model"
+	"github.com/nqxcode/chat_microservice/internal/repository"
+	"github.com/nqxcode/chat_microservice/internal/repository/message/converter"
+	modelRepo "github.com/nqxcode/chat_microservice/internal/repository/message/model"
+)
+
+const (
+	tableName = "message"
+
+	idColumn        = "message_id"
+	chatIDColumn    = "chat_id"
+	fromColumn      = "from"
+	messageColumn   = "message"
+	sentAt          = "sent_at"
+	createdAtColumn = "created_at"
+	updatedAtColumn = "updated_at"
+)
+
+type repo struct {
+	db db.Client
+}
+
+func NewRepository(db db.Client) repository.MessageRepository {
+	return &repo{db: db}
+}
+
+func (r *repo) Create(ctx context.Context, model *model.Message) (int64, error) {
+	builder := sq.Insert(tableName).
+		PlaceholderFormat(sq.Dollar).
+		Columns(chatIDColumn, fromColumn, messageColumn, sentAt).
+		Values(model.ChatID, model.From, model.Message, model.SentAt).
+		Suffix("RETURNING " + idColumn)
+
+	query, args, err := builder.ToSql()
+	if err != nil {
+		return 0, err
+	}
+
+	q := db.Query{
+		Name:     "message_repository.Create",
+		QueryRaw: query,
+	}
+
+	var id int64
+	err = r.db.DB().QueryRowContext(ctx, q, args...).Scan(&id)
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
+}
+
+func (r *repo) Get(ctx context.Context, chatID int64, limit repository.Limit) ([]model.Message, error) {
+	builder := sq.Select(idColumn, chatIDColumn, fromColumn, messageColumn, sentAt, createdAtColumn, updatedAtColumn).
+		PlaceholderFormat(sq.Dollar).
+		From(tableName).
+		Where(sq.Eq{chatIDColumn: chatID}).
+		Offset(limit.Offset).
+		Limit(limit.Limit)
+
+	query, args, err := builder.ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	q := db.Query{
+		Name:     "message_repository.GetAll",
+		QueryRaw: query,
+	}
+
+	var message []modelRepo.Message
+	err = r.db.DB().ScanAllContext(ctx, &message, q, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return converter.ToManyChatToUserFromRepo(message), nil
+}
+
+func (r *repo) DeleteByChatID(ctx context.Context, chatID int64) error {
+	builder := sq.Delete(tableName).
+		PlaceholderFormat(sq.Dollar).
+		Where(sq.Eq{chatIDColumn: chatID})
+
+	query, args, err := builder.ToSql()
+	if err != nil {
+		return err
+	}
+
+	q := db.Query{
+		Name:     tableName + ".DeleteByChatID",
+		QueryRaw: query,
+	}
+
+	_, err = r.db.DB().ExecContext(ctx, q, args...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

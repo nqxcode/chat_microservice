@@ -15,6 +15,16 @@ func (s *service) Create(ctx context.Context, info *model.ChatInfo) (int64, erro
 			return errTx
 		}
 
+		for _, userID := range info.UserIDs {
+			id, errTx = s.chatToUserRepository.Create(ctx, &model.ChatToUser{
+				ChatID: id,
+				UserID: userID,
+			})
+			if errTx != nil {
+				return errTx
+			}
+		}
+
 		return nil
 	})
 

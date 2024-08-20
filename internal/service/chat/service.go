@@ -7,16 +7,22 @@ import (
 )
 
 type service struct {
-	chatRepository repository.ChatRepository
-	txManager      db.TxManager
+	chatRepository       repository.ChatRepository
+	chatToUserRepository repository.ChatToUserRepository
+	messageRepository    repository.MessageRepository
+	txManager            db.TxManager
 }
 
 func NewService(
 	chatRepository repository.ChatRepository,
+	chatToUserRepository repository.ChatToUserRepository,
+	messageRepository repository.MessageRepository,
 	txManager db.TxManager,
 ) def.ChatService {
 	return &service{
-		chatRepository: chatRepository,
-		txManager:      txManager,
+		chatRepository:       chatRepository,
+		chatToUserRepository: chatToUserRepository,
+		messageRepository:    messageRepository,
+		txManager:            txManager,
 	}
 }
