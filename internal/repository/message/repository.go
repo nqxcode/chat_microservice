@@ -37,7 +37,7 @@ func NewRepository(db db.Client) repository.MessageRepository {
 func (r *repo) Create(ctx context.Context, model *model.Message) (int64, error) {
 	builder := sq.Insert(tableName).
 		PlaceholderFormat(sq.Dollar).
-		Columns(chatIDColumn, escapeColumnName(fromColumn), messageColumn, sentAt).
+		Columns(chatIDColumn, escape(fromColumn), messageColumn, sentAt).
 		Values(model.ChatID, model.From, model.Message, model.SentAt).
 		Suffix("RETURNING " + idColumn)
 
@@ -61,7 +61,7 @@ func (r *repo) Create(ctx context.Context, model *model.Message) (int64, error) 
 }
 
 func (r *repo) Get(ctx context.Context, chatID int64, limit repository.Limit) ([]model.Message, error) {
-	builder := sq.Select(idColumn, chatIDColumn, escapeColumnName(fromColumn), messageColumn, sentAt, createdAtColumn, updatedAtColumn).
+	builder := sq.Select(idColumn, chatIDColumn, escape(fromColumn), messageColumn, sentAt, createdAtColumn, updatedAtColumn).
 		PlaceholderFormat(sq.Dollar).
 		From(tableName).
 		Where(sq.Eq{chatIDColumn: chatID}).
@@ -110,6 +110,6 @@ func (r *repo) DeleteByChatID(ctx context.Context, chatID int64) error {
 	return nil
 }
 
-func escapeColumnName(column string) string {
-	return fmt.Sprintf("\"%s\"", column)
+func escape(value string) string {
+	return fmt.Sprintf("\"%s\"", value)
 }
