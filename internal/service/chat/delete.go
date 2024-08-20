@@ -1,6 +1,10 @@
 package chat
 
-import "context"
+import (
+	"context"
+	"github.com/nqxcode/chat_microservice/internal/model"
+	"github.com/nqxcode/chat_microservice/internal/service/log/constants"
+)
 
 func (s *service) Delete(ctx context.Context, id int64) error {
 
@@ -20,6 +24,15 @@ func (s *service) Delete(ctx context.Context, id int64) error {
 		errTx = s.chatRepository.Delete(ctx, id)
 		if errTx != nil {
 			return errTx
+		}
+
+		err := s.logService.Create(ctx, &model.Log{
+			Message: constants.ChatDeleted,
+			Payload: id,
+		})
+
+		if err != nil {
+			return err
 		}
 
 		return nil

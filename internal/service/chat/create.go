@@ -3,6 +3,7 @@ package chat
 import (
 	"context"
 	"github.com/nqxcode/chat_microservice/internal/model"
+	"github.com/nqxcode/chat_microservice/internal/service/log/constants"
 )
 
 func (s *service) Create(ctx context.Context, info *model.ChatInfo) (int64, error) {
@@ -23,6 +24,15 @@ func (s *service) Create(ctx context.Context, info *model.ChatInfo) (int64, erro
 			if errTx != nil {
 				return errTx
 			}
+		}
+
+		err := s.logService.Create(ctx, &model.Log{
+			Message: constants.ChatCreated,
+			Payload: info,
+		})
+
+		if err != nil {
+			return err
 		}
 
 		return nil

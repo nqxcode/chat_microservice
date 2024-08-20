@@ -2,6 +2,8 @@ ENV_FILE ?= .env
 
 include $(ENV_FILE)
 
+args=`arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
+
 LOCAL_BIN:=$(CURDIR)/bin
 
 LOCAL_MIGRATION_DIR=$(MIGRATION_DIR)
@@ -74,6 +76,9 @@ local-migration-status:
 
 local-migration-up:
 	$(LOCAL_BIN)/goose -dir ${LOCAL_MIGRATION_DIR} postgres ${LOCAL_MIGRATION_DSN} up -v
+
+local-migration-create:
+	$(LOCAL_BIN)/goose -dir ${LOCAL_MIGRATION_DIR} postgres ${LOCAL_MIGRATION_DSN} create "$(call args)" sql
 
 local-migration-down:
 	$(LOCAL_BIN)/goose -dir ${LOCAL_MIGRATION_DIR} postgres ${LOCAL_MIGRATION_DSN} down -v

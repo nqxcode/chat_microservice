@@ -10,3 +10,7 @@ type ChatService interface {
 	Delete(ctx context.Context, id int64) error
 	SendMessage(ctx context.Context, message *model.Message) (int64, error)
 }
+
+type LogService interface {
+	Create(ctx context.Context, message *model.Log) error
+}

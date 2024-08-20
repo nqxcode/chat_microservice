@@ -77,13 +77,13 @@ func (r *repo) Get(ctx context.Context, chatID int64, limit repository.Limit) ([
 		QueryRaw: query,
 	}
 
-	var message []modelRepo.Message
-	err = r.db.DB().ScanAllContext(ctx, &message, q, args...)
+	var messages []modelRepo.Message
+	err = r.db.DB().ScanAllContext(ctx, &messages, q, args...)
 	if err != nil {
 		return nil, err
 	}
 
-	return converter.ToManyChatToUserFromRepo(message), nil
+	return converter.ToManyChatToUserFromRepo(messages), nil
 }
 
 func (r *repo) DeleteByChatID(ctx context.Context, chatID int64) error {

@@ -13,9 +13,11 @@ import (
 	"github.com/nqxcode/chat_microservice/internal/repository"
 	chatRepository "github.com/nqxcode/chat_microservice/internal/repository/chat"
 	chatToUserRepository "github.com/nqxcode/chat_microservice/internal/repository/chat_to_user"
+	logRepository "github.com/nqxcode/chat_microservice/internal/repository/log"
 	messageRepository "github.com/nqxcode/chat_microservice/internal/repository/message"
 	"github.com/nqxcode/chat_microservice/internal/service"
 	chatService "github.com/nqxcode/chat_microservice/internal/service/chat"
+	logService "github.com/nqxcode/chat_microservice/internal/service/log"
 )
 
 type serviceProvider struct {
@@ -27,7 +29,9 @@ type serviceProvider struct {
 	chatRepository       repository.ChatRepository
 	chatToUserRepository repository.ChatToUserRepository
 	messageRepository    repository.MessageRepository
+	logRepository        repository.LogRepository
 
+	logService  service.LogService
 	chatService service.ChatService
 
 	chatImpl *chat.Implementation
@@ -114,12 +118,31 @@ func (s *serviceProvider) MessageRepository(ctx context.Context) repository.Mess
 	return s.messageRepository
 }
 
+func (s *serviceProvider) LogRepository(ctx context.Context) repository.LogRepository {
+	if s.logRepository == nil {
+		s.logRepository = logRepository.NewRepository(s.DBClient(ctx))
+	}
+
+	return s.logRepository
+}
+
+func (s *serviceProvider) LogService(ctx context.Context) service.LogService {
+	if s.logService == nil {
+		s.logService = logService.NewService(
+			s.LogRepository(ctx),
+		)
+	}
+
+	return s.logService
+}
+
 func (s *serviceProvider) ChatService(ctx context.Context) service.ChatService {
 	if s.chatService == nil {
 		s.chatService = chatService.NewService(
 			s.ChatRepository(ctx),
 			s.ChatToUserRepository(ctx),
 			s.MessageRepository(ctx),
+			s.LogService(ctx),
 			s.TxManager(ctx),
 		)
 	}

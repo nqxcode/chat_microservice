@@ -23,3 +23,7 @@ type MessageRepository interface {
 	Get(ctx context.Context, chatID int64, limit Limit) ([]model.Message, error)
 	DeleteByChatID(ctx context.Context, chatID int64) error
 }
+
+type LogRepository interface {
+	Create(ctx context.Context, model *model.Log) error
+}
