@@ -21,11 +21,13 @@ func init() {
 	flag.StringVar(&configPath, "config-path", ".env", "path to config file")
 }
 
+// App application
 type App struct {
 	serviceProvider *serviceProvider
 	grpcServer      *grpc.Server
 }
 
+// NewApp new application
 func NewApp(ctx context.Context) (*App, error) {
 	a := &App{}
 
@@ -37,6 +39,7 @@ func NewApp(ctx context.Context) (*App, error) {
 	return a, nil
 }
 
+// Run run application
 func (a *App) Run() error {
 	defer func() {
 		closer.CloseAll()

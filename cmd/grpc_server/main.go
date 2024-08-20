@@ -2,17 +2,10 @@ package main
 
 import (
 	"context"
-	"github.com/nqxcode/chat_microservice/internal/app"
-	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
 	"log"
 
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/nqxcode/chat_microservice/internal/app"
 )
-
-type server struct {
-	desc.UnimplementedChatV1Server
-	pool *pgxpool.Pool
-}
 
 func main() {
 	ctx := context.Background()

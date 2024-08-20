@@ -14,6 +14,7 @@ type service struct {
 	txManager            db.TxManager
 }
 
+// NewService new chat service
 func NewService(
 	chatRepository repository.ChatRepository,
 	chatToUserRepository repository.ChatToUserRepository,

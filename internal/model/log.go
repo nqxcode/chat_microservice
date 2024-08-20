@@ -1,7 +1,8 @@
 package model
 
+// Log model
 type Log struct {
 	Message string
 	Payload any
-	Ip      string
+	IP      string
 }

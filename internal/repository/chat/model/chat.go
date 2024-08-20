@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// Chat repository model
 type Chat struct {
 	ID        int64 `db:"chat_id"`
 	Name      string

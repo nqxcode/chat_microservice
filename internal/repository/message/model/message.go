@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// Message repository model
 type Message struct {
 	ID        int64 `db:"message_id"`
 	ChatID    int64

@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// Chat model
 type Chat struct {
 	ID        int64
 	Info      ChatInfo
@@ -12,6 +13,7 @@ type Chat struct {
 	UpdatedAt sql.NullTime
 }
 
+// ChatInfo model
 type ChatInfo struct {
 	Name    string
 	UserIDs []int64

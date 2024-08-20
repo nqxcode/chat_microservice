@@ -7,6 +7,7 @@ import (
 	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
 )
 
+// ToChatFromService convert to chat model
 func ToChatFromService(chat *model.Chat) *desc.Chat {
 	var updatedAt *timestamppb.Timestamp
 	if chat.UpdatedAt.Valid {
@@ -21,6 +22,7 @@ func ToChatFromService(chat *model.Chat) *desc.Chat {
 	}
 }
 
+// ToChatInfoFromService convert to chat info model
 func ToChatInfoFromService(info model.ChatInfo) *desc.ChatInfo {
 	return &desc.ChatInfo{
 		Name:    info.Name,
@@ -28,6 +30,7 @@ func ToChatInfoFromService(info model.ChatInfo) *desc.ChatInfo {
 	}
 }
 
+// ToChatInfoFromDesc to chat info model
 func ToChatInfoFromDesc(info *desc.ChatInfo) *model.ChatInfo {
 	return &model.ChatInfo{
 		Name:    info.Name,

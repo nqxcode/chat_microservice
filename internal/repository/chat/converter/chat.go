@@ -5,6 +5,7 @@ import (
 	modelRepo "github.com/nqxcode/chat_microservice/internal/repository/chat/model"
 )
 
+// ToChatFromRepo model converter
 func ToChatFromRepo(chat *modelRepo.Chat) *model.Chat {
 	return &model.Chat{
 		ID: chat.ID,

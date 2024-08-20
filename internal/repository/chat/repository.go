@@ -2,14 +2,14 @@ package chat
 
 import (
 	"context"
+
 	"github.com/nqxcode/chat_microservice/internal/client/db"
 	"github.com/nqxcode/chat_microservice/internal/model"
 	"github.com/nqxcode/chat_microservice/internal/repository"
-
-	sq "github.com/Masterminds/squirrel"
-
 	"github.com/nqxcode/chat_microservice/internal/repository/chat/converter"
 	modelRepo "github.com/nqxcode/chat_microservice/internal/repository/chat/model"
+
+	sq "github.com/Masterminds/squirrel"
 )
 
 const (
@@ -25,6 +25,7 @@ type repo struct {
 	db db.Client
 }
 
+// NewRepository new chat repository
 func NewRepository(db db.Client) repository.ChatRepository {
 	return &repo{db: db}
 }

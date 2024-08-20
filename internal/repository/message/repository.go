@@ -29,6 +29,7 @@ type repo struct {
 	db db.Client
 }
 
+// NewRepository new message repository
 func NewRepository(db db.Client) repository.MessageRepository {
 	return &repo{db: db}
 }
