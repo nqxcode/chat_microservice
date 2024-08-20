@@ -42,7 +42,7 @@ func (r *repo) Create(ctx context.Context, model *model.ChatInfo) (int64, error)
 	}
 
 	q := db.Query{
-		Name:     tableName + ".Create",
+		Name:     tableName + "_repository.Create",
 		QueryRaw: query,
 	}
 
@@ -66,7 +66,7 @@ func (r *repo) Delete(ctx context.Context, id int64) error {
 	}
 
 	q := db.Query{
-		Name:     tableName + ".Delete",
+		Name:     tableName + "_repository.Delete",
 		QueryRaw: query,
 	}
 
@@ -91,7 +91,7 @@ func (r *repo) Find(ctx context.Context, id int64) (*model.Chat, error) {
 	}
 
 	q := db.Query{
-		Name:     tableName + ".Find",
+		Name:     tableName + "_repository.Find",
 		QueryRaw: query,
 	}
 

@@ -42,7 +42,7 @@ func (r *repo) Create(ctx context.Context, model *model.ChatToUser) (int64, erro
 	}
 
 	q := db.Query{
-		Name:     tableName + ".Create",
+		Name:     tableName + "_repository.Create",
 		QueryRaw: query,
 	}
 
@@ -67,7 +67,7 @@ func (r *repo) GetAll(ctx context.Context, chatID int64) ([]model.ChatToUser, er
 	}
 
 	q := db.Query{
-		Name:     tableName + ".GetAll",
+		Name:     tableName + "_repository.GetAll",
 		QueryRaw: query,
 	}
 
@@ -91,7 +91,7 @@ func (r *repo) DeleteByChatID(ctx context.Context, chatID int64) error {
 	}
 
 	q := db.Query{
-		Name:     tableName + ".DeleteByChatID",
+		Name:     tableName + "_repository.DeleteByChatID",
 		QueryRaw: query,
 	}
 

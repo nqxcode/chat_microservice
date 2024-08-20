@@ -7,17 +7,17 @@ import (
 )
 
 func (s *service) Create(ctx context.Context, info *model.ChatInfo) (int64, error) {
-	var id int64
+	var chatID int64
 	err := s.txManager.ReadCommitted(ctx, func(ctx context.Context) error {
 		var errTx error
-		id, errTx = s.chatRepository.Create(ctx, info)
+		chatID, errTx = s.chatRepository.Create(ctx, info)
 		if errTx != nil {
 			return errTx
 		}
 
 		for _, userID := range info.UserIDs {
-			id, errTx = s.chatToUserRepository.Create(ctx, &model.ChatToUser{
-				ChatID: id,
+			_, errTx = s.chatToUserRepository.Create(ctx, &model.ChatToUser{
+				ChatID: chatID,
 				UserID: userID,
 			})
 			if errTx != nil {
@@ -32,5 +32,5 @@ func (s *service) Create(ctx context.Context, info *model.ChatInfo) (int64, erro
 		return 0, err
 	}
 
-	return id, nil
+	return chatID, nil
 }
