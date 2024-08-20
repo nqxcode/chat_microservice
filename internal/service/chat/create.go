@@ -28,7 +28,7 @@ func (s *service) Create(ctx context.Context, info *model.ChatInfo) (int64, erro
 
 		err := s.logService.Create(ctx, &model.Log{
 			Message: constants.ChatCreated,
-			Payload: info,
+			Payload: model.Chat{ID: chatID, Info: *info},
 		})
 
 		if err != nil {
