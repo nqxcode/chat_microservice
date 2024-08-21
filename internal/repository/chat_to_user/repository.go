@@ -2,8 +2,8 @@ package chat
 
 import (
 	"context"
-
 	"github.com/nqxcode/chat_microservice/internal/model"
+	"github.com/nqxcode/chat_microservice/internal/pagination"
 	"github.com/nqxcode/chat_microservice/internal/repository"
 	"github.com/nqxcode/chat_microservice/internal/repository/chat_to_user/converter"
 	modelRepo "github.com/nqxcode/chat_microservice/internal/repository/chat_to_user/model"
@@ -56,7 +56,7 @@ func (r *repo) Create(ctx context.Context, model *model.ChatToUser) (int64, erro
 	return id, nil
 }
 
-func (r *repo) Get(ctx context.Context, chatID int64, limit repository.Limit) ([]model.ChatToUser, error) {
+func (r *repo) Get(ctx context.Context, chatID int64, limit pagination.Limit) ([]model.ChatToUser, error) {
 	builder := sq.Select(idColumn, chatIDColumn, userIDColumn, createdAtColumn).
 		PlaceholderFormat(sq.Dollar).
 		From(tableName).
