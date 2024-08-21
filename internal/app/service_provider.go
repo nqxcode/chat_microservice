@@ -5,10 +5,6 @@ import (
 	"log"
 
 	"github.com/nqxcode/chat_microservice/internal/api/chat"
-	"github.com/nqxcode/chat_microservice/internal/client/db"
-	"github.com/nqxcode/chat_microservice/internal/client/db/pg"
-	"github.com/nqxcode/chat_microservice/internal/client/db/transaction"
-	"github.com/nqxcode/chat_microservice/internal/closer"
 	"github.com/nqxcode/chat_microservice/internal/config"
 	"github.com/nqxcode/chat_microservice/internal/repository"
 	chatRepository "github.com/nqxcode/chat_microservice/internal/repository/chat"
@@ -18,6 +14,10 @@ import (
 	"github.com/nqxcode/chat_microservice/internal/service"
 	chatService "github.com/nqxcode/chat_microservice/internal/service/chat"
 	logService "github.com/nqxcode/chat_microservice/internal/service/log"
+	"github.com/nqxcode/platform_common/client/db"
+	"github.com/nqxcode/platform_common/client/db/pg"
+	"github.com/nqxcode/platform_common/client/db/transaction"
+	"github.com/nqxcode/platform_common/closer"
 )
 
 type serviceProvider struct {

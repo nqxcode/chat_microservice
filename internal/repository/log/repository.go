@@ -3,9 +3,9 @@ package log
 import (
 	"context"
 
-	"github.com/nqxcode/chat_microservice/internal/client/db"
 	"github.com/nqxcode/chat_microservice/internal/model"
 	"github.com/nqxcode/chat_microservice/internal/repository"
+	"github.com/nqxcode/platform_common/client/db"
 
 	sq "github.com/Masterminds/squirrel"
 )
