@@ -8,6 +8,8 @@ import (
 	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
 
 	"github.com/golang/protobuf/ptypes/empty"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 // SendMessage send message
@@ -16,7 +18,7 @@ func (i *Implementation) SendMessage(ctx context.Context, req *desc.SendMessageR
 
 	_, err := i.chatService.SendMessage(ctx, converter.ToMessageFromDesc(req.GetInfo()))
 	if err != nil {
-		return nil, err
+		return nil, status.Error(codes.Internal, err.Error())
 	}
 
 	return nil, nil

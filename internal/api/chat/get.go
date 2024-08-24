@@ -17,7 +17,7 @@ func (i *Implementation) Get(ctx context.Context, req *desc.GetRequest) (*desc.G
 
 	chat, err := i.chatService.Get(ctx, req.GetId())
 	if err != nil {
-		return nil, status.Error(codes.NotFound, "Chat not found")
+		return nil, status.Error(codes.Internal, err.Error())
 	}
 
 	return &desc.GetResponse{
