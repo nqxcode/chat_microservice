@@ -3,14 +3,14 @@ package repository
 import (
 	"context"
 	"github.com/nqxcode/chat_microservice/internal/model"
-	"github.com/nqxcode/chat_microservice/internal/pagination"
+	"github.com/nqxcode/platform_common/pagination"
 )
 
 // ChatRepository chat repository
 type ChatRepository interface {
 	Create(ctx context.Context, model *model.ChatInfo) (int64, error)
 	Delete(ctx context.Context, id int64) error
-	Find(ctx context.Context, id int64) (*model.Chat, error)
+	Get(ctx context.Context, id int64) (*model.Chat, error)
 }
 
 // ChatToUserRepository chat to user relation repository

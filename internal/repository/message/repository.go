@@ -4,11 +4,11 @@ import (
 	"context"
 	"fmt"
 	"github.com/nqxcode/chat_microservice/internal/model"
-	"github.com/nqxcode/chat_microservice/internal/pagination"
 	"github.com/nqxcode/chat_microservice/internal/repository"
 	"github.com/nqxcode/chat_microservice/internal/repository/message/converter"
 	modelRepo "github.com/nqxcode/chat_microservice/internal/repository/message/model"
 	"github.com/nqxcode/platform_common/client/db"
+	"github.com/nqxcode/platform_common/pagination"
 
 	sq "github.com/Masterminds/squirrel"
 )

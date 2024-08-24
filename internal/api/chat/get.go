@@ -15,7 +15,7 @@ import (
 func (i *Implementation) Get(ctx context.Context, req *desc.GetRequest) (*desc.GetResponse, error) {
 	log.Printf("Get chat: %d", req.GetId())
 
-	chat, err := i.chatService.Find(ctx, req.GetId())
+	chat, err := i.chatService.Get(ctx, req.GetId())
 	if err != nil {
 		return nil, status.Error(codes.NotFound, "Chat not found")
 	}

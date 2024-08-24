@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	"github.com/nqxcode/chat_microservice/internal/model"
-	"github.com/nqxcode/chat_microservice/internal/pagination"
+	"github.com/nqxcode/platform_common/pagination"
 )
 
 // ChatService interface

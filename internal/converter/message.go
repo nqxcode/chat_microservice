@@ -2,8 +2,8 @@ package converter
 
 import (
 	"database/sql"
+
 	"github.com/nqxcode/chat_microservice/internal/model"
-	"github.com/nqxcode/chat_microservice/internal/pagination"
 	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -44,13 +44,5 @@ func ToMessageFromDesc(message *desc.Message) *model.Message {
 		From:    message.From,
 		Message: message.Message,
 		SentAt:  sentAt,
-	}
-}
-
-// ToLimitFromDesc convert to pagination limit
-func ToLimitFromDesc(message *desc.Limit) *pagination.Limit {
-	return &pagination.Limit{
-		Offset: message.Offset,
-		Limit:  message.Limit,
 	}
 }

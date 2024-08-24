@@ -79,7 +79,7 @@ func (r *repo) Delete(ctx context.Context, id int64) error {
 	return nil
 }
 
-func (r *repo) Find(ctx context.Context, id int64) (*model.Chat, error) {
+func (r *repo) Get(ctx context.Context, id int64) (*model.Chat, error) {
 	builder := sq.Select(idColumn, nameColumn, createdAtColumn, updatedAtColumn).
 		PlaceholderFormat(sq.Dollar).
 		From(tableName).
