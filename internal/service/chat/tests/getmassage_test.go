@@ -4,10 +4,11 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"testing"
+
 	"github.com/brianvoe/gofakeit"
 	"github.com/nqxcode/chat_microservice/internal/service/chat"
 	"github.com/nqxcode/platform_common/pagination"
-	"testing"
 
 	"github.com/nqxcode/chat_microservice/internal/model"
 	"github.com/nqxcode/chat_microservice/internal/repository"
@@ -53,8 +54,6 @@ func TestGetMessages(t *testing.T) {
 		createdAt = gofakeit.Date()
 		updatedAt = sql.NullTime{Valid: true, Time: gofakeit.Date()}
 
-		limit = pagination.Limit{Limit: pagination.DefaultLimit}
-
 		repoErr = fmt.Errorf("repo error")
 	)
 
@@ -69,6 +68,8 @@ func TestGetMessages(t *testing.T) {
 			UpdatedAt: updatedAt,
 		},
 	}
+
+	limit := pagination.Limit{Limit: pagination.DefaultLimit}
 
 	cases := []struct {
 		name                     string
@@ -85,6 +86,7 @@ func TestGetMessages(t *testing.T) {
 			input: input{
 				ctx:    ctx,
 				chatID: chatID,
+				limit:  pagination.Limit{Limit: pagination.DefaultLimit},
 			},
 			expected: expected{
 				err:  nil,
@@ -119,6 +121,7 @@ func TestGetMessages(t *testing.T) {
 			input: input{
 				ctx:    ctx,
 				chatID: chatID,
+				limit:  pagination.Limit{Limit: pagination.DefaultLimit},
 			},
 			expected: expected{
 				err:  repoErr,
@@ -159,7 +162,7 @@ func TestGetMessages(t *testing.T) {
 
 			srv := chat.NewService(chatRepoMock, chatToUserRepoMock, messageRepoMock, logSrvMock, txMngFake)
 
-			ar, err := srv.GetMessages(tt.input.ctx, tt.input.chatID, &limit)
+			ar, err := srv.GetMessages(tt.input.ctx, tt.input.chatID, &tt.input.limit)
 			require.Equal(t, tt.expected.err, err)
 			require.Equal(t, tt.expected.resp, ar)
 		})

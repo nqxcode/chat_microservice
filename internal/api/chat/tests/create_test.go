@@ -3,9 +3,10 @@ package tests
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/brianvoe/gofakeit"
 	"github.com/nqxcode/chat_microservice/internal/api/chat"
-	"testing"
 
 	"github.com/gojuno/minimock/v3"
 	"github.com/nqxcode/chat_microservice/internal/converter"

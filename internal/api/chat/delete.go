@@ -2,8 +2,9 @@ package chat
 
 import (
 	"context"
-	"google.golang.org/grpc/codes"
 	"log"
+
+	"google.golang.org/grpc/codes"
 
 	"github.com/golang/protobuf/ptypes/empty"
 	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"

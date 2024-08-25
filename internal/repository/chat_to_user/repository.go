@@ -2,6 +2,7 @@ package chat
 
 import (
 	"context"
+
 	"github.com/nqxcode/chat_microservice/internal/model"
 	"github.com/nqxcode/chat_microservice/internal/repository"
 	"github.com/nqxcode/chat_microservice/internal/repository/chat_to_user/converter"

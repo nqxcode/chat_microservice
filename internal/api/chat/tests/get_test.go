@@ -4,11 +4,12 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"testing"
+
 	"github.com/brianvoe/gofakeit"
 	"github.com/nqxcode/chat_microservice/internal/api/chat"
 	"github.com/nqxcode/chat_microservice/internal/converter"
 	"github.com/nqxcode/chat_microservice/internal/model"
-	"testing"
 
 	"github.com/gojuno/minimock/v3"
 	"github.com/nqxcode/chat_microservice/internal/service"

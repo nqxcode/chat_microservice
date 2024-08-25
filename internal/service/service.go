@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+
 	"github.com/nqxcode/chat_microservice/internal/model"
 	"github.com/nqxcode/platform_common/pagination"
 )

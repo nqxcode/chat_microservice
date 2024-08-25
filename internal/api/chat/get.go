@@ -2,8 +2,9 @@ package chat
 
 import (
 	"context"
-	"github.com/nqxcode/chat_microservice/internal/converter"
 	"log"
+
+	"github.com/nqxcode/chat_microservice/internal/converter"
 
 	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
 
