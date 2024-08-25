@@ -8,7 +8,7 @@ require (
 	github.com/gojuno/minimock/v3 v3.3.14
 	github.com/golang/protobuf v1.5.4
 	github.com/joho/godotenv v1.5.1
-	github.com/nqxcode/platform_common v0.0.0-20240824002548-0fea91a78179
+	github.com/nqxcode/platform_common v0.0.0-20240825072307-d237cf2efeef
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.8.4
 	google.golang.org/grpc v1.65.0
