@@ -7,12 +7,12 @@ import (
 	"github.com/nqxcode/platform_common/pagination"
 )
 
-func (s *service) GetMessages(ctx context.Context, id int64, limit *pagination.Limit) ([]model.Message, error) {
+func (s *service) GetMessages(ctx context.Context, chatID int64, limit *pagination.Limit) ([]model.Message, error) {
 	var messages []model.Message
 	err := s.txManager.ReadCommitted(ctx, func(ctx context.Context) error {
 		var errTx error
 
-		messages, errTx = s.messageRepository.Get(ctx, id, limit)
+		messages, errTx = s.messageRepository.Get(ctx, chatID, limit)
 		if errTx != nil {
 			return errTx
 		}
