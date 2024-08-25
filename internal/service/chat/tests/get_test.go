@@ -35,7 +35,7 @@ func TestGet(t *testing.T) {
 	}
 
 	type expected struct {
-		resp any
+		resp *model.Chat
 		err  error
 	}
 
@@ -126,11 +126,11 @@ func TestGet(t *testing.T) {
 			},
 			expected: expected{
 				err:  repoErr,
-				resp: int64(0),
+				resp: nil,
 			},
 			chatRepositoryMock: func(mc *minimock.Controller) repository.ChatRepository {
 				mock := repoMocks.NewChatRepositoryMock(mc)
-				mock.CreateMock.Expect(ctx, &cht.Info).Return(0, repoErr)
+				mock.GetMock.Expect(ctx, chatID).Return(nil, repoErr)
 				return mock
 			},
 			chatToUserRepositoryMock: func(mc *minimock.Controller) repository.ChatToUserRepository {
