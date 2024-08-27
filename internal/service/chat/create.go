@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/nqxcode/chat_microservice/internal/model"
-	"github.com/nqxcode/chat_microservice/internal/service/log/constants"
+	"github.com/nqxcode/chat_microservice/internal/service/audit_log/constants"
 )
 
 func (s *service) Create(ctx context.Context, info *model.ChatInfo) (int64, error) {
@@ -27,7 +27,7 @@ func (s *service) Create(ctx context.Context, info *model.ChatInfo) (int64, erro
 			}
 		}
 
-		err := s.logService.Create(ctx, &model.Log{
+		err := s.auditLogService.Create(ctx, &model.Log{
 			Message: constants.ChatCreated,
 			Payload: model.Chat{ID: chatID, Info: *info},
 		})

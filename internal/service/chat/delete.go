@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/nqxcode/chat_microservice/internal/model"
-	"github.com/nqxcode/chat_microservice/internal/service/log/constants"
+	"github.com/nqxcode/chat_microservice/internal/service/audit_log/constants"
 )
 
 func (s *service) Delete(ctx context.Context, id int64) error {
@@ -26,7 +26,7 @@ func (s *service) Delete(ctx context.Context, id int64) error {
 			return errTx
 		}
 
-		err := s.logService.Create(ctx, &model.Log{
+		err := s.auditLogService.Create(ctx, &model.Log{
 			Message: constants.ChatDeleted,
 			Payload: id,
 		})
