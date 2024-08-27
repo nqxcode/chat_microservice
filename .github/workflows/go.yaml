@@ -2,9 +2,9 @@ name: Go
 
 on:
   push:
-    branches: [ main, master, week_1, week_2 ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master, week_1, week_2 ]
+    branches: [ main, week_1, week_2, week_3, week_4 ]
 
 env:
   REGISTRY: "cr.selcloud.ru/nqxcode"
@@ -51,7 +51,7 @@ jobs:
           # Require: The version of golangci-lint to use.
           # When `install-mode` is `binary` (default) the value can be v1.2 or v1.2.3 or `latest` to use the latest version.
           # When `install-mode` is `goinstall` the value can be v1.2.3, `latest`, or the hash of a commit.
-          version: v1.59
+          version: v1.60
 
           # Optional: working directory, useful for monorepos
           # working-directory: somedir
@@ -97,6 +97,7 @@ jobs:
           docker buildx create --use
           docker buildx build --no-cache --push --tag $REGISTRY/$IMAGE_NAME:$TAG_NAME -f ./Dockerfile ./
           docker buildx build --no-cache --push --tag $REGISTRY/$MIGRATION_IMAGE_NAME:$TAG_NAME -f ./migration.Dockerfile ./
+
 
 
   deploy-image:

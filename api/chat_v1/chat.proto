@@ -10,12 +10,37 @@ option go_package = "github.com/nqxcode/chat_microservice/pkg/chat_v1;chat_v1";
 service ChatV1 {
   rpc Create(CreateRequest) returns (CreateResponse);
   rpc Delete(DeleteRequest) returns (google.protobuf.Empty);
+  rpc Get(GetRequest) returns (GetResponse);
   rpc SendMessage(SendMessageRequest) returns (google.protobuf.Empty);
+  rpc GetMessages(GetMessagesRequest) returns (GetMessagesResponse);
+}
+
+message ChatInfo {
+  string name = 1;
+  repeated int64 user_ids = 2;
+}
+
+message Chat {
+  int64 id = 1;
+  ChatInfo info = 2;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
+}
+
+message Message {
+  string from = 1;
+  string message = 2;
+  google.protobuf.Timestamp timestamp = 3;
+  int64 chatId = 4;
+}
+
+message Limit {
+  uint64 offset = 1;
+  uint64 limit = 2;
 }
 
 message CreateRequest {
-  string name = 1;
-  repeated int64 user_id_list = 2;
+  ChatInfo info = 1;
 }
 
 message CreateResponse {
@@ -26,9 +51,23 @@ message DeleteRequest {
   int64 id = 1;
 }
 
+message GetRequest {
+  int64 id = 1;
+}
+
+message GetResponse {
+  Chat chat = 1;
+}
+
 message SendMessageRequest {
-  string from = 1;
-  string message = 2;
-  google.protobuf.Timestamp timestamp = 3;
-  int64 chatId = 4;
+  Message info = 1;
+}
+
+message GetMessagesRequest {
+  int64 chatId = 1;
+  Limit limit = 2;
+}
+
+message GetMessagesResponse {
+  repeated Message message = 1;
 }
