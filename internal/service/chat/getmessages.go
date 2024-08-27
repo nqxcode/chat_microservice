@@ -6,7 +6,7 @@ import (
 	"github.com/nqxcode/platform_common/pagination"
 
 	"github.com/nqxcode/chat_microservice/internal/model"
-	"github.com/nqxcode/chat_microservice/internal/service/log/constants"
+	"github.com/nqxcode/chat_microservice/internal/service/audit_log/constants"
 )
 
 func (s *service) GetMessages(ctx context.Context, chatID int64, limit *pagination.Limit) ([]model.Message, error) {
@@ -19,7 +19,7 @@ func (s *service) GetMessages(ctx context.Context, chatID int64, limit *paginati
 			return errTx
 		}
 
-		err := s.logService.Create(ctx, &model.Log{
+		err := s.auditLogService.Create(ctx, &model.Log{
 			Message: constants.GetMessages,
 			Payload: messages,
 		})

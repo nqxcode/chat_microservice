@@ -15,9 +15,9 @@ import (
 	"github.com/nqxcode/chat_microservice/internal/repository"
 	repoMocks "github.com/nqxcode/chat_microservice/internal/repository/mocks"
 	"github.com/nqxcode/chat_microservice/internal/service"
+	"github.com/nqxcode/chat_microservice/internal/service/audit_log/constants"
 	"github.com/nqxcode/chat_microservice/internal/service/chat"
 	serviceSupport "github.com/nqxcode/chat_microservice/internal/service/chat/tests/support"
-	"github.com/nqxcode/chat_microservice/internal/service/log/constants"
 	serviceMocks "github.com/nqxcode/chat_microservice/internal/service/mocks"
 )
 
@@ -27,7 +27,7 @@ func TestGet(t *testing.T) {
 	type chatRepositoryMock func(mc *minimock.Controller) repository.ChatRepository
 	type chatToUserRepositoryMock func(mc *minimock.Controller) repository.ChatToUserRepository
 	type messageRepositoryMock func(mc *minimock.Controller) repository.MessageRepository
-	type logServiceMock func(mc *minimock.Controller) service.LogService
+	type logServiceMock func(mc *minimock.Controller) service.AuditLogService
 
 	type input struct {
 		ctx    context.Context
@@ -105,8 +105,8 @@ func TestGet(t *testing.T) {
 				}).Then([]model.ChatToUser{}, nil)
 				return mock
 			},
-			logServiceMock: func(mc *minimock.Controller) service.LogService {
-				mock := serviceMocks.NewLogServiceMock(mc)
+			logServiceMock: func(mc *minimock.Controller) service.AuditLogService {
+				mock := serviceMocks.NewAuditLogServiceMock(mc)
 				mock.CreateMock.Expect(ctx, &model.Log{
 					Message: constants.ChatFound,
 					Payload: cht,
@@ -137,8 +137,8 @@ func TestGet(t *testing.T) {
 				mock := repoMocks.NewChatToUserRepositoryMock(mc)
 				return mock
 			},
-			logServiceMock: func(mc *minimock.Controller) service.LogService {
-				mock := serviceMocks.NewLogServiceMock(mc)
+			logServiceMock: func(mc *minimock.Controller) service.AuditLogService {
+				mock := serviceMocks.NewAuditLogServiceMock(mc)
 				return mock
 			},
 			messageRepositoryMock: func(mc *minimock.Controller) repository.MessageRepository {

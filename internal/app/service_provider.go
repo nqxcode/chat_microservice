@@ -17,8 +17,8 @@ import (
 	logRepository "github.com/nqxcode/chat_microservice/internal/repository/log"
 	messageRepository "github.com/nqxcode/chat_microservice/internal/repository/message"
 	"github.com/nqxcode/chat_microservice/internal/service"
+	auditLogService "github.com/nqxcode/chat_microservice/internal/service/audit_log"
 	chatService "github.com/nqxcode/chat_microservice/internal/service/chat"
-	logService "github.com/nqxcode/chat_microservice/internal/service/log"
 )
 
 type serviceProvider struct {
@@ -32,8 +32,8 @@ type serviceProvider struct {
 	messageRepository    repository.MessageRepository
 	logRepository        repository.LogRepository
 
-	logService  service.LogService
-	chatService service.ChatService
+	auditLogService service.AuditLogService
+	chatService     service.ChatService
 
 	chatImpl *chat.Implementation
 }
@@ -127,14 +127,14 @@ func (s *serviceProvider) LogRepository(ctx context.Context) repository.LogRepos
 	return s.logRepository
 }
 
-func (s *serviceProvider) LogService(ctx context.Context) service.LogService {
-	if s.logService == nil {
-		s.logService = logService.NewService(
+func (s *serviceProvider) AuditLogService(ctx context.Context) service.AuditLogService {
+	if s.auditLogService == nil {
+		s.auditLogService = auditLogService.NewService(
 			s.LogRepository(ctx),
 		)
 	}
 
-	return s.logService
+	return s.auditLogService
 }
 
 func (s *serviceProvider) ChatService(ctx context.Context) service.ChatService {
@@ -143,7 +143,7 @@ func (s *serviceProvider) ChatService(ctx context.Context) service.ChatService {
 			s.ChatRepository(ctx),
 			s.ChatToUserRepository(ctx),
 			s.MessageRepository(ctx),
-			s.LogService(ctx),
+			s.AuditLogService(ctx),
 			s.TxManager(ctx),
 		)
 	}

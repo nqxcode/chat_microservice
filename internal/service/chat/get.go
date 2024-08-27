@@ -6,7 +6,7 @@ import (
 	"github.com/nqxcode/platform_common/pagination"
 
 	"github.com/nqxcode/chat_microservice/internal/model"
-	"github.com/nqxcode/chat_microservice/internal/service/log/constants"
+	"github.com/nqxcode/chat_microservice/internal/service/audit_log/constants"
 )
 
 func (s *service) Get(ctx context.Context, id int64) (*model.Chat, error) {
@@ -39,7 +39,7 @@ func (s *service) Get(ctx context.Context, id int64) (*model.Chat, error) {
 		}
 		chat.Info.UserIDs = userIDs
 
-		err := s.logService.Create(ctx, &model.Log{
+		err := s.auditLogService.Create(ctx, &model.Log{
 			Message: constants.ChatFound,
 			Payload: chat,
 		})

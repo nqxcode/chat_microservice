@@ -17,7 +17,7 @@ type ChatService interface {
 	GetMessages(ctx context.Context, id int64, limit *pagination.Limit) ([]model.Message, error)
 }
 
-// LogService interface
-type LogService interface {
+// AuditLogService interface
+type AuditLogService interface {
 	Create(ctx context.Context, message *model.Log) error
 }
