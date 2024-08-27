@@ -6,13 +6,13 @@ import (
 	"testing"
 
 	"github.com/brianvoe/gofakeit"
+	"github.com/gojuno/minimock/v3"
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"github.com/gojuno/minimock/v3"
 	"github.com/nqxcode/chat_microservice/internal/api/chat"
 	"github.com/nqxcode/chat_microservice/internal/converter"
 	"github.com/nqxcode/chat_microservice/internal/service"
