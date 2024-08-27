@@ -3,6 +3,8 @@ package converter
 import (
 	"github.com/nqxcode/chat_microservice/internal/model"
 	modelRepo "github.com/nqxcode/chat_microservice/internal/repository/message/model"
+
+	"github.com/samber/lo"
 )
 
 // ToMessageFromRepo convert to message model
@@ -20,13 +22,7 @@ func ToMessageFromRepo(m *modelRepo.Message) *model.Message {
 
 // ToManyChatToUserFromRepo convert to many chat to user relation models
 func ToManyChatToUserFromRepo(messages []modelRepo.Message) []model.Message {
-	result := make([]model.Message, 0, len(messages))
-	for i := range messages {
-		m := ToMessageFromRepo(&messages[i])
-		if m != nil {
-			result = append(result, *m)
-		}
-	}
-
-	return result
+	return lo.Map(messages, func(message modelRepo.Message, _ int) model.Message {
+		return *ToMessageFromRepo(&message)
+	})
 }
