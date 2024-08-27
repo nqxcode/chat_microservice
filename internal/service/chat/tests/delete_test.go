@@ -6,19 +6,18 @@ import (
 	"testing"
 
 	"github.com/brianvoe/gofakeit"
-	"github.com/nqxcode/chat_microservice/internal/service/chat"
+	"github.com/gojuno/minimock/v3"
+	"github.com/nqxcode/platform_common/client/db"
+	"github.com/stretchr/testify/require"
 
 	"github.com/nqxcode/chat_microservice/internal/model"
 	"github.com/nqxcode/chat_microservice/internal/repository"
 	repoMocks "github.com/nqxcode/chat_microservice/internal/repository/mocks"
 	"github.com/nqxcode/chat_microservice/internal/service"
+	"github.com/nqxcode/chat_microservice/internal/service/chat"
 	serviceSupport "github.com/nqxcode/chat_microservice/internal/service/chat/tests/support"
 	"github.com/nqxcode/chat_microservice/internal/service/log/constants"
 	serviceMocks "github.com/nqxcode/chat_microservice/internal/service/mocks"
-	"github.com/nqxcode/platform_common/client/db"
-
-	"github.com/gojuno/minimock/v3"
-	"github.com/stretchr/testify/require"
 )
 
 func TestDelete(t *testing.T) {

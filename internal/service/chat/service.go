@@ -3,6 +3,7 @@ package chat
 import (
 	"github.com/nqxcode/chat_microservice/internal/repository"
 	def "github.com/nqxcode/chat_microservice/internal/service"
+
 	"github.com/nqxcode/platform_common/client/db"
 )
 

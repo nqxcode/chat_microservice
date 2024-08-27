@@ -4,12 +4,11 @@ import (
 	"context"
 	"log"
 
-	"google.golang.org/grpc/codes"
-
 	"github.com/golang/protobuf/ptypes/empty"
-	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
-
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
 )
 
 // Delete delete chat

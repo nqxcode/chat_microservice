@@ -3,8 +3,9 @@ package repository
 import (
 	"context"
 
-	"github.com/nqxcode/chat_microservice/internal/model"
 	"github.com/nqxcode/platform_common/pagination"
+
+	"github.com/nqxcode/chat_microservice/internal/model"
 )
 
 // ChatRepository chat repository

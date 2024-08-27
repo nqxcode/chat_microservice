@@ -2,6 +2,7 @@ package converter
 
 import (
 	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
+
 	"github.com/nqxcode/platform_common/pagination"
 )
 

@@ -3,13 +3,13 @@ package chat
 import (
 	"context"
 
+	sq "github.com/Masterminds/squirrel"
+	"github.com/nqxcode/platform_common/client/db"
+
 	"github.com/nqxcode/chat_microservice/internal/model"
 	"github.com/nqxcode/chat_microservice/internal/repository"
 	"github.com/nqxcode/chat_microservice/internal/repository/chat/converter"
 	modelRepo "github.com/nqxcode/chat_microservice/internal/repository/chat/model"
-	"github.com/nqxcode/platform_common/client/db"
-
-	sq "github.com/Masterminds/squirrel"
 )
 
 const (

@@ -4,8 +4,9 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/nqxcode/chat_microservice/internal/model"
 	"github.com/nqxcode/platform_common/helper/grpc"
+
+	"github.com/nqxcode/chat_microservice/internal/model"
 )
 
 func (s *service) Create(ctx context.Context, log *model.Log) error {

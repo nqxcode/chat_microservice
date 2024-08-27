@@ -4,12 +4,12 @@ import (
 	"context"
 	"log"
 
-	"github.com/nqxcode/chat_microservice/internal/converter"
-	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
-
 	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	"github.com/nqxcode/chat_microservice/internal/converter"
+	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
 )
 
 // SendMessage send message

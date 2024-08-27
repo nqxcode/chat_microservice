@@ -7,18 +7,17 @@ import (
 	"testing"
 
 	"github.com/brianvoe/gofakeit"
-	"github.com/nqxcode/chat_microservice/internal/api/chat"
-	"github.com/nqxcode/chat_microservice/internal/converter"
-	"github.com/nqxcode/chat_microservice/internal/model"
-
 	"github.com/gojuno/minimock/v3"
-	"github.com/nqxcode/chat_microservice/internal/service"
-	serviceMocks "github.com/nqxcode/chat_microservice/internal/service/mocks"
-	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
-
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	"github.com/nqxcode/chat_microservice/internal/api/chat"
+	"github.com/nqxcode/chat_microservice/internal/converter"
+	"github.com/nqxcode/chat_microservice/internal/model"
+	"github.com/nqxcode/chat_microservice/internal/service"
+	serviceMocks "github.com/nqxcode/chat_microservice/internal/service/mocks"
+	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
 )
 
 func TestGet(t *testing.T) {

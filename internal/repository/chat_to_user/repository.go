@@ -3,14 +3,14 @@ package chat
 import (
 	"context"
 
+	sq "github.com/Masterminds/squirrel"
+	"github.com/nqxcode/platform_common/client/db"
+	"github.com/nqxcode/platform_common/pagination"
+
 	"github.com/nqxcode/chat_microservice/internal/model"
 	"github.com/nqxcode/chat_microservice/internal/repository"
 	"github.com/nqxcode/chat_microservice/internal/repository/chat_to_user/converter"
 	modelRepo "github.com/nqxcode/chat_microservice/internal/repository/chat_to_user/model"
-	"github.com/nqxcode/platform_common/client/db"
-	"github.com/nqxcode/platform_common/pagination"
-
-	sq "github.com/Masterminds/squirrel"
 )
 
 const (

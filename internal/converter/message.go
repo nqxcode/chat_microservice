@@ -5,6 +5,7 @@ import (
 
 	"github.com/nqxcode/chat_microservice/internal/model"
 	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
+
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 

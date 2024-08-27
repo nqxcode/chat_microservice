@@ -6,13 +6,13 @@ import (
 	"log"
 	"net"
 
-	"github.com/nqxcode/chat_microservice/internal/config"
-	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
 	"github.com/nqxcode/platform_common/closer"
-
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/reflection"
+
+	"github.com/nqxcode/chat_microservice/internal/config"
+	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
 )
 
 var configPath string

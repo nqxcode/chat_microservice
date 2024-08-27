@@ -3,9 +3,10 @@ package chat
 import (
 	"context"
 
+	"github.com/nqxcode/platform_common/pagination"
+
 	"github.com/nqxcode/chat_microservice/internal/model"
 	"github.com/nqxcode/chat_microservice/internal/service/log/constants"
-	"github.com/nqxcode/platform_common/pagination"
 )
 
 func (s *service) GetMessages(ctx context.Context, chatID int64, limit *pagination.Limit) ([]model.Message, error) {

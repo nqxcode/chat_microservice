@@ -7,18 +7,17 @@ import (
 
 	"github.com/brianvoe/gofakeit"
 	"github.com/golang/protobuf/ptypes/empty"
-	"github.com/nqxcode/chat_microservice/internal/api/chat"
-	"github.com/nqxcode/chat_microservice/internal/converter"
-	"google.golang.org/protobuf/types/known/timestamppb"
-
-	"github.com/gojuno/minimock/v3"
-	"github.com/nqxcode/chat_microservice/internal/service"
-	serviceMocks "github.com/nqxcode/chat_microservice/internal/service/mocks"
-	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
-
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/timestamppb"
+
+	"github.com/gojuno/minimock/v3"
+	"github.com/nqxcode/chat_microservice/internal/api/chat"
+	"github.com/nqxcode/chat_microservice/internal/converter"
+	"github.com/nqxcode/chat_microservice/internal/service"
+	serviceMocks "github.com/nqxcode/chat_microservice/internal/service/mocks"
+	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
 )
 
 func TestSendMessage(t *testing.T) {

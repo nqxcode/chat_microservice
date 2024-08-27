@@ -1,9 +1,9 @@
 package converter
 
 import (
-	"github.com/nqxcode/chat_microservice/internal/model"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
+	"github.com/nqxcode/chat_microservice/internal/model"
 	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
 )
 

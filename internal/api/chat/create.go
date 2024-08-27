@@ -5,11 +5,10 @@ import (
 	"log"
 
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 
 	"github.com/nqxcode/chat_microservice/internal/converter"
 	desc "github.com/nqxcode/chat_microservice/pkg/chat_v1"
-
-	"google.golang.org/grpc/status"
 )
 
 // Create create chat

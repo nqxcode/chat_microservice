@@ -3,11 +3,11 @@ package log
 import (
 	"context"
 
-	"github.com/nqxcode/chat_microservice/internal/model"
-	"github.com/nqxcode/chat_microservice/internal/repository"
+	sq "github.com/Masterminds/squirrel"
 	"github.com/nqxcode/platform_common/client/db"
 
-	sq "github.com/Masterminds/squirrel"
+	"github.com/nqxcode/chat_microservice/internal/model"
+	"github.com/nqxcode/chat_microservice/internal/repository"
 )
 
 const (
