@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	tableName = "audit_log"
+	tableName = "log"
 
 	idColumn        = "log_id"
 	messageColumn   = "message"
