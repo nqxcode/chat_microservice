@@ -35,6 +35,7 @@ func NewRepository(db db.Client) repository.MessageRepository {
 	return &repo{db: db}
 }
 
+// Create message
 func (r *repo) Create(ctx context.Context, model *model.Message) (int64, error) {
 	builder := sq.Insert(tableName).
 		PlaceholderFormat(sq.Dollar).
@@ -61,6 +62,7 @@ func (r *repo) Create(ctx context.Context, model *model.Message) (int64, error) 
 	return id, nil
 }
 
+// Get with limit by chat id
 func (r *repo) Get(ctx context.Context, chatID int64, limit *pagination.Limit) ([]model.Message, error) {
 	builder := sq.Select(idColumn, chatIDColumn, escape(fromColumn), messageColumn, sentAt, createdAtColumn, updatedAtColumn).
 		PlaceholderFormat(sq.Dollar).
@@ -88,6 +90,7 @@ func (r *repo) Get(ctx context.Context, chatID int64, limit *pagination.Limit) (
 	return converter.ToManyChatToUserFromRepo(messages), nil
 }
 
+// DeleteByChatID delete by chat id
 func (r *repo) DeleteByChatID(ctx context.Context, chatID int64) error {
 	builder := sq.Delete(tableName).
 		PlaceholderFormat(sq.Dollar).

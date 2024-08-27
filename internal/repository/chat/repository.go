@@ -30,6 +30,7 @@ func NewRepository(db db.Client) repository.ChatRepository {
 	return &repo{db: db}
 }
 
+// Create chat
 func (r *repo) Create(ctx context.Context, model *model.ChatInfo) (int64, error) {
 	builder := sq.Insert(tableName).
 		PlaceholderFormat(sq.Dollar).
@@ -56,6 +57,7 @@ func (r *repo) Create(ctx context.Context, model *model.ChatInfo) (int64, error)
 	return id, nil
 }
 
+// Delete by id
 func (r *repo) Delete(ctx context.Context, id int64) error {
 	builder := sq.Delete(tableName).
 		PlaceholderFormat(sq.Dollar).
@@ -79,6 +81,7 @@ func (r *repo) Delete(ctx context.Context, id int64) error {
 	return nil
 }
 
+// Get chat by id
 func (r *repo) Get(ctx context.Context, id int64) (*model.Chat, error) {
 	builder := sq.Select(idColumn, nameColumn, createdAtColumn, updatedAtColumn).
 		PlaceholderFormat(sq.Dollar).
