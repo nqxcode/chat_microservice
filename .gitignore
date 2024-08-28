@@ -1,6 +1,5 @@
 .idea
 /bin/
 /vendor/
-/vendor.protogen
 coverage.out
 .env
