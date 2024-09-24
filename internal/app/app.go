@@ -128,7 +128,7 @@ func (a *App) initAuthClient(ctx context.Context) error {
 		return fmt.Errorf("credentials: failed to append certificates")
 	}
 
-	creds := credentials.NewTLS(&tls.Config{ServerName: "", RootCAs: cp})
+	creds := credentials.NewTLS(&tls.Config{ServerName: "", RootCAs: cp, MinVersion: tls.VersionTLS12})
 
 	conn, err := grpc.Dial(a.serviceProvider.AuthConfig().Address(), grpc.WithTransportCredentials(creds))
 	if err != nil {

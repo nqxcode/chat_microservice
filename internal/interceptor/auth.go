@@ -2,11 +2,12 @@ package interceptor
 
 import (
 	"context"
+	"strings"
+
 	descAccess "github.com/nqxcode/chat_microservice/pkg/auth_v1"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
-	"strings"
 )
 
 const authPrefix = "Bearer "
