@@ -21,6 +21,7 @@ type authInterceptor struct {
 	authClient descAccess.AuthV1Client
 }
 
+// NewAuthInterceptor new auth interceptor
 func NewAuthInterceptor(authClient descAccess.AuthV1Client) *authInterceptor {
 	return &authInterceptor{
 		authClient: authClient,

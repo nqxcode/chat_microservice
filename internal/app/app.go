@@ -122,7 +122,7 @@ func (a *App) initGRPCServer(ctx context.Context) error {
 	return nil
 }
 
-func (a *App) initAuthClient(ctx context.Context) error {
+func (a *App) initAuthClient(_ context.Context) error {
 	cp := x509.NewCertPool()
 	if !cp.AppendCertsFromPEM(a.serviceProvider.AuthConfig().Cert()) {
 		return fmt.Errorf("credentials: failed to append certificates")
@@ -130,7 +130,7 @@ func (a *App) initAuthClient(ctx context.Context) error {
 
 	creds := credentials.NewTLS(&tls.Config{ServerName: "", RootCAs: cp, MinVersion: tls.VersionTLS12})
 
-	conn, err := grpc.Dial(a.serviceProvider.AuthConfig().Address(), grpc.WithTransportCredentials(creds))
+	conn, err := grpc.Dial(a.serviceProvider.AuthConfig().Address(), grpc.WithTransportCredentials(creds)) // nolint:staticcheck
 	if err != nil {
 		log.Fatalf("failed to dial Auth client: %v", err)
 	}
