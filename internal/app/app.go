@@ -2,7 +2,10 @@ package app
 
 import (
 	"context"
+	"crypto/tls"
+	"crypto/x509"
 	"flag"
+	"fmt"
 	"log"
 	"net"
 	"os"
@@ -10,9 +13,10 @@ import (
 	"sync"
 	"syscall"
 
+	descAuth "github.com/nqxcode/chat_microservice/pkg/auth_v1"
 	"github.com/nqxcode/platform_common/closer"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/reflection"
 
 	"github.com/nqxcode/chat_microservice/internal/config"
@@ -29,6 +33,7 @@ func init() {
 type App struct {
 	serviceProvider *serviceProvider
 	grpcServer      *grpc.Server
+	authClient      descAuth.AuthV1Client
 }
 
 // NewApp new application
@@ -73,6 +78,7 @@ func (a *App) initDeps(ctx context.Context) error {
 	inits := []func(context.Context) error{
 		a.initConfig,
 		a.initServiceProvider,
+		a.initAuthClient,
 		a.initGRPCServer,
 	}
 
@@ -101,11 +107,35 @@ func (a *App) initServiceProvider(_ context.Context) error {
 }
 
 func (a *App) initGRPCServer(ctx context.Context) error {
-	a.grpcServer = grpc.NewServer(grpc.Creds(insecure.NewCredentials()))
+	tlsCert, err := tls.X509KeyPair(a.serviceProvider.GRPCConfig().Cert(), a.serviceProvider.GRPCConfig().Key())
+	if err != nil {
+		return err
+	}
+	creds := credentials.NewServerTLSFromCert(&tlsCert)
+
+	a.grpcServer = grpc.NewServer(grpc.Creds(creds), grpc.UnaryInterceptor(a.serviceProvider.AuthInterceptor(a.authClient).Intercept))
 
 	reflection.Register(a.grpcServer)
 
 	desc.RegisterChatV1Server(a.grpcServer, a.serviceProvider.ChatImpl(ctx))
+
+	return nil
+}
+
+func (a *App) initAuthClient(ctx context.Context) error {
+	cp := x509.NewCertPool()
+	if !cp.AppendCertsFromPEM(a.serviceProvider.AuthConfig().Cert()) {
+		return fmt.Errorf("credentials: failed to append certificates")
+	}
+
+	creds := credentials.NewTLS(&tls.Config{ServerName: "", RootCAs: cp})
+
+	conn, err := grpc.Dial(a.serviceProvider.AuthConfig().Address(), grpc.WithTransportCredentials(creds))
+	if err != nil {
+		log.Fatalf("failed to dial Auth client: %v", err)
+	}
+
+	a.authClient = descAuth.NewAuthV1Client(conn)
 
 	return nil
 }

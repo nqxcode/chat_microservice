@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 
+	"github.com/nqxcode/chat_microservice/internal/interceptor"
 	"github.com/nqxcode/platform_common/client/db"
 	"github.com/nqxcode/platform_common/client/db/pg"
 	"github.com/nqxcode/platform_common/client/db/transaction"
@@ -19,11 +20,13 @@ import (
 	"github.com/nqxcode/chat_microservice/internal/service"
 	auditLogService "github.com/nqxcode/chat_microservice/internal/service/audit_log"
 	chatService "github.com/nqxcode/chat_microservice/internal/service/chat"
+	descAuth "github.com/nqxcode/chat_microservice/pkg/auth_v1"
 )
 
 type serviceProvider struct {
 	pgConfig   config.PGConfig
 	grpcConfig config.GRPCConfig
+	authConfig config.AuthConfig
 
 	dbClient             db.Client
 	txManager            db.TxManager
@@ -34,6 +37,7 @@ type serviceProvider struct {
 
 	auditLogService service.AuditLogService
 	chatService     service.ChatService
+	authInterceptor interceptor.AuthInterceptor
 
 	chatImpl *chat.Implementation
 }
@@ -66,6 +70,19 @@ func (s *serviceProvider) GRPCConfig() config.GRPCConfig {
 	}
 
 	return s.grpcConfig
+}
+
+func (s *serviceProvider) AuthConfig() config.AuthConfig {
+	if s.authConfig == nil {
+		cfg, err := config.NewAuthConfig()
+		if err != nil {
+			log.Fatalf("failed to get auth config: %s", err.Error())
+		}
+
+		s.authConfig = cfg
+	}
+
+	return s.authConfig
 }
 
 func (s *serviceProvider) DBClient(ctx context.Context) db.Client {
@@ -135,6 +152,14 @@ func (s *serviceProvider) AuditLogService(ctx context.Context) service.AuditLogS
 	}
 
 	return s.auditLogService
+}
+
+func (s *serviceProvider) AuthInterceptor(authClient descAuth.AuthV1Client) interceptor.AuthInterceptor {
+	if s.authInterceptor == nil {
+		s.authInterceptor = interceptor.NewAuthInterceptor(authClient)
+	}
+
+	return s.authInterceptor
 }
 
 func (s *serviceProvider) ChatService(ctx context.Context) service.ChatService {

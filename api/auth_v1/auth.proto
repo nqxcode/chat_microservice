@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package auth_v1;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/nqxcode/chat_microservice/pkg/auth_v1;auth_v1";
+
+service AuthV1 {
+  rpc Check(CheckRequest) returns (google.protobuf.Empty);
+}
+
+message CheckRequest {
+  string endpoint_address = 1;
+}
